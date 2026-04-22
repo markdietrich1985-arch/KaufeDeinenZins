@@ -122,7 +122,7 @@
                     <h1 class="text-4xl md:text-7xl font-black uppercase tracking-tighter leading-tight mb-6">Die Zinsrevolution<br><span class="text-neon drop-shadow-[0_0_15px_rgba(204,255,0,0.5)]">Kaufe Deinen Zins</span></h1>
                     <p class="text-base md:text-2xl text-gray-300 mb-10 max-w-2xl mx-auto font-medium px-2">Mache dich unabhängig von den schwankenden Bauzinsen der Banken. Sichere dir noch heute planbare Traumzinsen für deine Zukunft.</p>
                     <div class="flex flex-col md:flex-row justify-center gap-4 mt-8">
-                        <button onclick="document.getElementById('configurator').scrollIntoView({ behavior: 'smooth' });" class="bg-neon text-space font-black text-lg px-8 py-4 rounded-lg hover:bg-white transition-colors uppercase shadow-[0_0_20px_rgba(204,255,0,0.5)]">Zins-Rechner starten ?</button>
+                        <button onclick="document.getElementById('configurator').scrollIntoView({ behavior: 'smooth' });" class="bg-neon text-space font-black text-lg px-8 py-4 rounded-lg hover:bg-white transition-colors uppercase shadow-[0_0_20px_rgba(204,255,0,0.5)]">Zins-Rechner starten</button>
                         <button onclick="switchView('view-riester')" class="bg-transparent border-2 border-cyber text-cyber font-black text-sm md:text-lg px-8 py-4 rounded-lg hover:bg-cyber hover:text-white transition-colors uppercase">Zu den Familien-Zulagen</button>
                     </div>
                 </div>
@@ -249,7 +249,7 @@
                             <ul class="space-y-4 mt-4 md:mt-2">
                                 <li class="flex justify-between items-center text-sm md:text-xl border-b border-gray-800 pb-3"><span class="text-gray-300">Gesichertes Volumen:</span><span class="font-black text-xl md:text-2xl text-white"><span id="resultVolume">50.000</span> €</span></li>
                                 <li class="flex justify-between items-center text-sm md:text-xl"><span class="text-gray-300">Garantierter Darlehenszins:</span><span class="font-black text-xl md:text-2xl text-white"><span id="resultTariff">1,0</span> %<sup class="text-xs md:text-sm font-bold">*</sup></span></li>
-                                <li class="flex flex-col md:flex-row justify-between md:items-center text-sm md:text-xl bg-gray-900 p-3 rounded-lg border border-gray-700 gap-1"><span class="text-gray-300 font-bold">? Verfügbar in:</span><span id="zuteilungContainer" class="font-black text-lg md:text-xl text-white"></span></li>
+                                <li class="flex flex-col md:flex-row justify-between md:items-center text-sm md:text-xl bg-gray-900 p-3 rounded-lg border border-gray-700 gap-1"><span class="text-gray-300 font-bold">Verfügbar in:</span><span id="zuteilungContainer" class="font-black text-lg md:text-xl text-white"></span></li>
                                 <li id="timeSkipResult" class="flex flex-col md:flex-row justify-between md:items-center text-sm md:text-xl bg-cyber/20 p-3 rounded-lg border border-cyber hidden gap-1"><span class="text-cyber font-bold text-xs md:text-lg uppercase">Zeitersparnis:</span><span class="font-black text-lg md:text-xl text-cyber">überspringt <span id="timeSkipVal"></span> ?</span></li>
                                 
                                 <li class="flex justify-between items-center text-sm md:text-xl pt-2"><span class="text-gray-300">Wohnungsbauprämie (p.a.):</span><span class="font-black text-xl md:text-2xl text-white">+ <span id="wopVal">60</span> €</span></li>
@@ -852,7 +852,7 @@
                         www.bankenombudsmann.de</p>
                     </div>
                 </div>
-                <button onclick="switchView('view-home')" class="text-gray-500 hover:text-white uppercase text-sm font-bold mt-10 w-full text-center tracking-widest transition-colors">? Zurück zur Startseite</button>
+                <button onclick="switchView('view-home')" class="text-gray-500 hover:text-white uppercase text-sm font-bold mt-10 w-full text-center tracking-widest transition-colors">← Zurück zur Startseite</button>
             </div>
         </div>
 
@@ -909,7 +909,7 @@
 
                 </div>
                 
-                <button onclick="switchView('view-home')" class="text-gray-500 hover:text-white uppercase text-sm font-bold mt-12 w-full text-center tracking-widest transition-colors bg-space/50 py-4 rounded-xl border border-gray-800">? Zurück zur Startseite</button>
+                <button onclick="switchView('view-home')" class="text-gray-500 hover:text-white uppercase text-sm font-bold mt-12 w-full text-center tracking-widest transition-colors bg-space/50 py-4 rounded-xl border border-gray-800">← Zurück zur Startseite</button>
             </div>
         </div>
 
@@ -1057,7 +1057,7 @@
                     </button>
                 </div>
                 
-                <button onclick="switchView('view-home')" class="text-gray-500 hover:text-white uppercase text-sm font-bold mt-16 w-full text-center tracking-widest transition-colors bg-space/50 py-4 rounded-xl border border-gray-800">? Zurück zur Startseite</button>
+                <button onclick="switchView('view-home')" class="text-gray-500 hover:text-white uppercase text-sm font-bold mt-16 w-full text-center tracking-widest transition-colors bg-space/50 py-4 rounded-xl border border-gray-800">← Zurück zur Startseite</button>
             </div>
         </div>
 
