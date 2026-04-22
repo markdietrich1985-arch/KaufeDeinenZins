@@ -502,7 +502,7 @@
 
                 <div class="mb-20">
                     <button onclick="openCheckout('standard')" class="bg-transparent border-2 border-neon text-neon font-black text-lg px-12 py-4 rounded-lg hover:bg-neon hover:text-space transition-colors uppercase shadow-[0_0_15px_rgba(204,255,0,0.2)]">
-                        Jetzt starten (Kaufe Deinen Zins) ?
+                        Jetzt starten (Kaufe Deinen Zins)
                     </button>
                 </div>
             </div>
@@ -696,7 +696,7 @@
                     </div>
 
                     <div class="mt-8">
-                        <button onclick="openCheckout('riester')" class="bg-cyber text-white font-black text-lg px-12 py-4 rounded-lg hover:bg-white hover:text-cyber transition-all uppercase w-full shadow-[0_0_20px_rgba(138,43,226,0.3)] transform hover:scale-[1.02]">Familien-Förderung sichern ?</button>
+                        <button onclick="openCheckout('riester')" class="bg-cyber text-white font-black text-lg px-12 py-4 rounded-lg hover:bg-white hover:text-cyber transition-all uppercase w-full shadow-[0_0_20px_rgba(138,43,226,0.3)] transform hover:scale-[1.02]">Familien-Förderung sichern</button>
                     </div>
 
                 </div>
@@ -756,10 +756,11 @@
                         <input type="hidden" name="ausgewaehltes_volumen" id="formHiddenVolume" value="Nicht gewählt">
                         <input type="hidden" name="zinssatz" id="formHiddenTariff" value="0%">
                         <input type="hidden" name="riester" id="formHiddenRiester" value="Nein">
+                        <input type="hidden" name="referenz" id="formHiddenRef" value="">
 
                         <!-- SCHRITT 1: Kontaktdaten -->
                         <div id="step1-container">
-                            <h3 class="text-white font-black text-xl uppercase mb-6 tracking-wide">Schritt 1: Deine Kontaktdaten</h3>
+                            <h3 class="text-white font-black text-xl uppercase mb-6 tracking-wide">Deine Kontaktdaten</h3>
                             <div class="flex flex-col md:flex-row gap-5 mb-5">
                                 <div class="flex-1">
                                     <label class="text-gray-400 text-xs uppercase font-bold block mb-2">Vorname</label>
@@ -784,25 +785,78 @@
                                 <span class="text-gray-400 text-xs leading-relaxed">Ich stimme der Verarbeitung meiner Daten zur Kontaktaufnahme und Angebotserstellung gemäß der <a onclick="switchView('view-datenschutz')" class="text-neon underline cursor-pointer">Datenschutzerklärung</a> zu.</span>
                             </label>
                             <p id="step1-error" class="hidden text-red-400 text-sm mb-4 font-bold">Bitte fülle alle Felder aus und stimme der Datenschutzerklärung zu.</p>
-                            <button type="button" onclick="submitStep1AndShowStep2(this)" class="w-full bg-neon text-space font-black text-lg py-4 rounded-xl hover:bg-white transition-colors uppercase shadow-[0_0_20px_rgba(204,255,0,0.4)]">
-                                Weiter →
+                            <button type="button" onclick="submitStep1(this)" class="w-full bg-neon text-space font-black text-lg py-4 rounded-xl hover:bg-white transition-colors uppercase shadow-[0_0_20px_rgba(204,255,0,0.4)]">
+                                Senden
                             </button>
                         </div>
 
-                        <!-- SCHRITT 2: Bestätigung -->
-                        <div id="step2-container" class="hidden">
-                            <h3 class="text-white font-black text-xl uppercase mb-6 tracking-wide">Schritt 2: Bestätigung</h3>
-                            <p class="text-gray-300 mb-8">Deine Kontaktdaten wurden übermittelt. Klicke jetzt auf „Antrag absenden", um deine Konditionen verbindlich anzufragen.</p>
-                            <button type="submit" class="w-full bg-neon text-space font-black text-lg py-4 rounded-xl hover:bg-white transition-colors uppercase shadow-[0_0_20px_rgba(204,255,0,0.4)]">
-                                Antrag absenden ✓
-                            </button>
+                        <!-- SCHRITT 2: Erfolg + optional Familie -->
+                        <div id="step2-container" class="hidden text-center">
+                            <div class="text-neon text-6xl mb-4">✓</div>
+                            <h3 class="text-white font-black text-2xl uppercase mb-3">Antrag gesendet!</h3>
+                            <p class="text-gray-300 mb-2">Wir melden uns so schnell wie möglich bei dir.</p>
+                            <p class="text-gray-500 text-sm mb-8">Deine Referenznummer: <span id="refNumberDisplay" class="text-neon font-bold"></span></p>
+
+                            <!-- Optionaler Familien-Block -->
+                            <div id="familyOptionalBlock" class="hidden mt-4">
+                                <div class="border-t border-gray-800 pt-8 text-left">
+                                    <p class="text-gray-300 text-sm mb-4 text-center">Möchtest du unserem Telefon-Agent helfen und den Prozess beschleunigen?<br><span class="text-gray-500 text-xs">(Optional — du kannst auch einfach auf unseren Anruf warten)</span></p>
+                                    <button type="button" id="expandFamilyBtn" onclick="expandFamilyForm()" class="w-full border-2 border-cyber text-cyber font-black py-3 rounded-xl hover:bg-cyber hover:text-white transition-all uppercase text-sm mb-6">
+                                        Ja, ich helfe dem Telefon-Agent →
+                                    </button>
+
+                                    <!-- Erweitertes Formular — zunächst versteckt -->
+                                    <div id="familyFormExpanded" class="hidden">
+                                        <h4 class="text-white font-black uppercase mb-4 text-sm tracking-wide">Weitere Angaben (optional)</h4>
+
+                                        <div class="mb-4">
+                                            <label class="text-gray-400 text-xs uppercase font-bold block mb-2">Adresse</label>
+                                            <input type="text" name="adresse" id="formAdresse" class="neon-input w-full rounded-lg px-4 py-3 text-white" placeholder="Straße, Hausnummer, PLZ, Ort">
+                                        </div>
+                                        <div class="mb-4">
+                                            <label class="text-gray-400 text-xs uppercase font-bold block mb-2">Dein Geburtsdatum</label>
+                                            <input type="date" name="geburtsdatum_kunde" id="formGebDatum" class="neon-input w-full rounded-lg px-4 py-3 text-white">
+                                        </div>
+
+                                        <div id="spouseBlock" class="mb-4 p-4 bg-space rounded-xl border border-gray-800">
+                                            <label class="flex items-center gap-3 cursor-pointer mb-3">
+                                                <input type="checkbox" id="formVerheiratet" onchange="toggleSpouse()" class="cyber-checkbox w-5 h-5 rounded appearance-none bg-panel border-2 shrink-0">
+                                                <span class="text-gray-300 text-sm font-bold">Verheiratet</span>
+                                            </label>
+                                            <div id="spouseFields" class="hidden">
+                                                <div class="mb-3">
+                                                    <label class="text-gray-400 text-xs uppercase font-bold block mb-2">Name des Partners / der Partnerin</label>
+                                                    <input type="text" name="partner_name" id="formPartnerName" class="neon-input w-full rounded-lg px-4 py-3 text-white">
+                                                </div>
+                                                <div>
+                                                    <label class="text-gray-400 text-xs uppercase font-bold block mb-2">Geburtsdatum Partner / Partnerin</label>
+                                                    <input type="date" name="partner_geburtsdatum" id="formPartnerGeb" class="neon-input w-full rounded-lg px-4 py-3 text-white">
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div id="childrenBlock" class="mb-6">
+                                            <div class="flex justify-between items-center mb-3">
+                                                <label class="text-gray-400 text-xs uppercase font-bold">Kinder</label>
+                                                <button type="button" onclick="addChild()" class="text-cyber text-xs font-bold border border-cyber px-3 py-1 rounded-lg hover:bg-cyber hover:text-white transition-all">+ Kind hinzufügen</button>
+                                            </div>
+                                            <div id="childrenList" class="space-y-3"></div>
+                                        </div>
+
+                                        <input type="hidden" name="referenz_step2" id="formHiddenRef2" value="">
+                                        <button type="button" onclick="submitStep2(this)" class="w-full bg-cyber text-white font-black text-lg py-4 rounded-xl hover:bg-white hover:text-cyber transition-colors uppercase shadow-[0_0_20px_rgba(138,43,226,0.4)]">
+                                            Infos senden
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
 
-                        <!-- SCHRITT 3: Erfolg -->
-                        <div id="step3-container" class="hidden text-center py-10">
-                            <div class="text-neon text-6xl mb-6">✓</div>
-                            <h3 class="text-white font-black text-2xl uppercase mb-4">Antrag gesendet!</h3>
-                            <p class="text-gray-300">Wir prüfen deine Daten und melden uns umgehend bei dir.</p>
+                        <!-- SCHRITT 3: Erfolg nach Step 2 -->
+                        <div id="step3-container" class="hidden text-center py-6">
+                            <div class="text-cyber text-6xl mb-4">✓</div>
+                            <h3 class="text-white font-black text-2xl uppercase mb-3">Vielen Dank!</h3>
+                            <p class="text-gray-300">Danke, dass du unserem Telefon-Agent hilfst — wir melden uns so schnell wie möglich bei dir!</p>
                         </div>
                     </form>
                     
@@ -1209,6 +1263,11 @@
             document.getElementById('step2-container').classList.add('hidden');
             document.getElementById('step3-container').classList.add('hidden');
             document.getElementById('step1-error').classList.add('hidden');
+            document.getElementById('familyOptionalBlock').classList.add('hidden');
+            document.getElementById('familyFormExpanded').classList.add('hidden');
+            document.getElementById('expandFamilyBtn').classList.remove('hidden');
+            document.getElementById('childrenList').innerHTML = '';
+            childCount = 0;
             document.getElementById('checkoutBackButton').classList.remove('hidden');
 
             switchView('view-checkout');
@@ -1243,64 +1302,110 @@
             document.getElementById('formHiddenRiester').value = cartHasRiester ? "Ja (Zulagen berechnet)" : "Nein";
         }
 
-        // --- CHECKOUT-VALIDIERUNG & AJAX SUBMIT (Schritt 1 -> 2) ---
-        function submitStep1AndShowStep2(btnElement) {
-            const form = document.getElementById('antragForm');
+        // --- FORM SUBMIT LOGIK ---
+        let childCount = 0;
+
+        function generateRef() {
+            const now = new Date();
+            const pad = n => String(n).padStart(2, '0');
+            return `${now.getFullYear()}${pad(now.getMonth()+1)}${pad(now.getDate())}-${pad(now.getHours())}${pad(now.getMinutes())}${pad(now.getSeconds())}`;
+        }
+
+        function submitStep1(btnElement) {
             const v = document.getElementById('formVorname').value.trim();
             const n = document.getElementById('formNachname').value.trim();
             const e = document.getElementById('formEmail').value.trim();
             const t = document.getElementById('formTelefon').value.trim();
             const d = document.getElementById('formDsgvo').checked;
-            
-            // Pflichtfelder prüfen
+
             if(!v || !n || !e || !t || !d) {
                 document.getElementById('step1-error').classList.remove('hidden');
                 return;
             }
-            
             document.getElementById('step1-error').classList.add('hidden');
-            
-            // Button Status auf Laden setzen
+
             const originalText = btnElement.innerText;
-            btnElement.innerText = "Daten werden übermittelt...";
+            btnElement.innerText = "Wird gesendet...";
             btnElement.disabled = true;
 
-            // Formular an Formspree schicken (AJAX)
-            const formData = new FormData(form);
+            const ref = generateRef();
+            document.getElementById('formHiddenRef').value = ref;
+            document.getElementById('formHiddenRef2').value = ref;
+
+            const formData = new FormData();
+            formData.append('vorname', v);
+            formData.append('nachname', n);
+            formData.append('email', e);
+            formData.append('telefon', t);
+            formData.append('ausgewaehltes_volumen', document.getElementById('formHiddenVolume').value);
+            formData.append('zinssatz', document.getElementById('formHiddenTariff').value);
+            formData.append('riester', document.getElementById('formHiddenRiester').value);
+            formData.append('referenz', ref);
+
             fetch("https://formspree.io/f/xojypqgd", {
                 method: "POST",
                 headers: { "Accept": "application/json" },
                 body: formData
             })
             .then(() => {
-                // Bei Erfolg: Zu Schritt 2 wechseln
                 document.getElementById('step1-container').classList.add('hidden');
                 document.getElementById('step2-container').classList.remove('hidden');
+                document.getElementById('refNumberDisplay').innerText = ref;
+
+                // Only show optional family block if riester is in cart
+                if (cartHasRiester) {
+                    document.getElementById('familyOptionalBlock').classList.remove('hidden');
+                }
                 window.scrollTo({ top: 0, behavior: 'smooth' });
-                
-                // Button wiederherstellen (falls Formular erneut geöffnet wird)
                 btnElement.innerText = originalText;
                 btnElement.disabled = false;
             })
-            .catch((error) => {
+            .catch(() => {
                 alert("Ein Verbindungsfehler ist aufgetreten. Bitte versuche es noch einmal.");
                 btnElement.innerText = originalText;
                 btnElement.disabled = false;
             });
         }
 
-        // --- AJAX SUBMIT FÜR SCHRITT 2 (Um Weiterleitung zu verhindern) ---
-        document.getElementById('antragForm').addEventListener('submit', function(e) {
-            e.preventDefault(); // Verhindert das normale Neuladen der Seite
-            
-            const form = e.target;
-            const submitBtn = form.querySelector('button[type="submit"]');
-            const originalText = submitBtn.innerText;
-            
-            submitBtn.innerText = "Wird verarbeitet...";
-            submitBtn.disabled = true;
+        function expandFamilyForm() {
+            document.getElementById('expandFamilyBtn').classList.add('hidden');
+            document.getElementById('familyFormExpanded').classList.remove('hidden');
+        }
 
+        function toggleSpouse() {
+            const checked = document.getElementById('formVerheiratet').checked;
+            document.getElementById('spouseFields').classList.toggle('hidden', !checked);
+        }
+
+        function addChild() {
+            childCount++;
+            const div = document.createElement('div');
+            div.className = 'flex gap-3 items-center bg-space p-3 rounded-lg border border-gray-800';
+            div.innerHTML = `
+                <div class="flex-1">
+                    <input type="text" name="kind_${childCount}_name" placeholder="Name Kind ${childCount}" class="neon-input w-full rounded-lg px-3 py-2 text-white text-sm">
+                </div>
+                <div class="flex-1">
+                    <input type="date" name="kind_${childCount}_geb" class="neon-input w-full rounded-lg px-3 py-2 text-white text-sm">
+                </div>
+                <button type="button" onclick="this.parentElement.remove()" class="text-gray-600 hover:text-red-500 transition-colors shrink-0">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                </button>`;
+            document.getElementById('childrenList').appendChild(div);
+        }
+
+        function submitStep2(btnElement) {
+            const originalText = btnElement.innerText;
+            btnElement.innerText = "Wird gesendet...";
+            btnElement.disabled = true;
+
+            const form = document.getElementById('antragForm');
             const formData = new FormData(form);
+            // Add name from step1 for reference
+            formData.append('vorname_ref', document.getElementById('formVorname').value);
+            formData.append('nachname_ref', document.getElementById('formNachname').value);
+            formData.append('step', 'Familien-Zusatzdaten');
+
             fetch("https://formspree.io/f/xojypqgd", {
                 method: "POST",
                 headers: { "Accept": "application/json" },
@@ -1311,17 +1416,15 @@
                 document.getElementById('checkoutBackButton').classList.add('hidden');
                 document.getElementById('step3-container').classList.remove('hidden');
                 window.scrollTo({ top: 0, behavior: 'smooth' });
-                
-                submitBtn.innerText = originalText;
-                submitBtn.disabled = false;
+                btnElement.innerText = originalText;
+                btnElement.disabled = false;
             })
-            .catch((error) => {
+            .catch(() => {
                 alert("Ein Verbindungsfehler ist aufgetreten.");
-                submitBtn.innerText = originalText;
-                submitBtn.disabled = false;
+                btnElement.innerText = originalText;
+                btnElement.disabled = false;
             });
-        });
-
+        }
 
         // --- FAQ TOGGLE FUNKTION ---
         function toggleFaq(btn) {
@@ -1442,7 +1545,7 @@
                 descDisplay.innerHTML = "(Der Premium-Allrounder ab 50.000 €)";
                 descDisplay.className = "block text-xs md:text-sm text-gray-500 font-medium mt-1 normal-case tracking-normal transition-colors";
             } else if (selectedTariff === "2.35") {
-                descDisplay.innerHTML = "(Fokus auf schnellste Verfügbarkeit ?)";
+                descDisplay.innerHTML = "(Fokus auf schnellste Verfügbarkeit)";
                 descDisplay.className = "block text-xs md:text-sm text-neon font-medium mt-1 normal-case tracking-normal transition-colors drop-shadow-[0_0_5px_rgba(204,255,0,0.4)]";
             }
 
@@ -1552,7 +1655,7 @@
 
             let zuteilungContainer = document.getElementById('zuteilungContainer');
             if (zielErreicht) {
-                if (zuteilungsJahre <= 0.1) { zuteilungContainer.innerHTML = '<span class="text-neon font-black drop-shadow-[0_0_5px_rgba(204,255,0,0.8)]">sofort (Guthaben reicht) ?</span>'; } 
+                if (zuteilungsJahre <= 0.1) { zuteilungContainer.innerHTML = '<span class="text-neon font-black drop-shadow-[0_0_5px_rgba(204,255,0,0.8)]">sofort (Guthaben reicht)</span>'; } 
                 else { zuteilungContainer.innerHTML = 'ca. <span class="font-black">' + zuteilungsJahre + '</span> Jahren'; }
             } else {
                 zuteilungContainer.innerHTML = '<span class="text-red-500 font-bold text-sm">Rate zu niedrig</span>';
@@ -1736,13 +1839,13 @@
 
             const minBadge = document.getElementById('riesterMinBadge');
             if (actualOwnYearly <= minOwn) {
-                minBadge.innerHTML = '? Genial: Du zahlst nur den gesetzlichen Mindestbeitrag!';
+                minBadge.innerHTML = '⭐ Genial: Du zahlst nur den gesetzlichen Mindestbeitrag!';
                 minBadge.classList.remove('bg-neon', 'border-neon');
                 minBadge.classList.add('bg-space', 'border-gray-700', 'border');
                 minBadge.classList.remove('border-2', 'shadow-[0_0_15px_rgba(204,255,0,0.3)]');
             } else {
                 let percent = (totalZulage / actualOwnYearly) * 100;
-                minBadge.innerHTML = `? Wahnsinn: + ${percent.toFixed(0)} % Förderung auf deine Einzahlung!`;
+                minBadge.innerHTML = `🎉 Wahnsinn: + ${percent.toFixed(0)} % Förderung auf deine Einzahlung!`;
                 minBadge.classList.remove('bg-space', 'border-gray-700', 'border');
                 minBadge.classList.add('bg-space', 'border-neon', 'border-2', 'shadow-[0_0_15px_rgba(204,255,0,0.3)]');
             }
