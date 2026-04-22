@@ -1,0 +1,1799 @@
+<!DOCTYPE html>
+<html lang="de" class="scroll-smooth overflow-x-hidden">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    
+    <title>Kaufe Deinen Zins | Die Zinsrevolution</title>
+    <meta name="description" content="Sichere dir schon heute günstige Bauzinsen für dein zukünftiges Eigenheim. Die intelligente Zins-Strategie mit staatlichen Zulagen (Wohnungsbauprämie, Riester). Jetzt Rechner starten!">
+    
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;900&display=swap" rel="stylesheet">
+    
+    <script>
+        const originalWarn = console.warn;
+        console.warn = function(...args) {
+            if (args[0] && typeof args[0] === 'string' && args[0].includes('cdn.tailwindcss.com')) return;
+            originalWarn.apply(console, args);
+        };
+    </script>
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        space: '#0D0D0D',
+                        panel: '#1A1A1A',
+                        neon: '#CCFF00',
+                        cyber: '#8A2BE2',
+                    },
+                    fontFamily: {
+                        sans: ['Montserrat', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body { overflow-x: hidden; width: 100%; position: relative; background-color: #0D0D0D; }
+        
+        .nav-link { position: relative; text-decoration: none; cursor: pointer; }
+        .nav-link::after { content: ''; position: absolute; width: 0; height: 2px; bottom: -4px; left: 0; background-color: #CCFF00; transition: width 0.3s; }
+        .nav-link:hover::after, .nav-link.active::after { width: 100%; }
+        .nav-link.active { color: #CCFF00; text-shadow: 0 0 10px rgba(204,255,0,0.5); }
+
+        input[type=range] { -webkit-appearance: none; width: 100%; background: transparent; }
+        input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; height: 24px; width: 24px; border-radius: 50%; background: #CCFF00; cursor: pointer; margin-top: -8px; box-shadow: 0 0 10px #CCFF00; }
+        input[type=range]::-webkit-slider-runnable-track { width: 100%; height: 8px; cursor: pointer; background: #333; border-radius: 4px; }
+        #lumpSum::-webkit-slider-thumb { background: #8A2BE2; box-shadow: 0 0 10px #8A2BE2; }
+        #priceSlider::-webkit-slider-thumb { background: #fff; box-shadow: 0 0 10px #fff; }
+        #budgetIn::-webkit-slider-thumb, #budgetOut::-webkit-slider-thumb { background: #fff; box-shadow: 0 0 10px #fff; }
+        .cyber-checkbox:checked { background-color: #8A2BE2; border-color: #8A2BE2; }
+        
+        .tariff-radio:checked + div { border-color: #CCFF00; background-color: rgba(204, 255, 0, 0.1); box-shadow: 0 0 20px rgba(204, 255, 0, 0.3); transform: scale(1.05); }
+        .tariff-radio:checked + div .tariff-title { color: #CCFF00; }
+
+        .comp-radio:checked + div { border-color: #CCFF00; background-color: rgba(204, 255, 0, 0.1); color: #CCFF00;}
+
+        .view-section { display: none; opacity: 0; transition: opacity 0.3s ease-in-out; width: 100%; }
+        .view-section.active-view { display: flex; opacity: 1; }
+        
+        @keyframes shake-hard {
+            0%, 100% { transform: translateX(0); }
+            20% { transform: translateX(-5px) rotate(-1deg); }
+            40% { transform: translateX(5px) rotate(1deg); }
+            60% { transform: translateX(-5px) rotate(-1deg); }
+            80% { transform: translateX(5px) rotate(1deg); }
+        }
+        .shake-trigger { animation: shake-hard 0.4s cubic-bezier(.36,.07,.19,.97) both; }
+
+        .neon-input { background: #0D0D0D; border: 2px solid #333; color: white; transition: all 0.3s; }
+        .neon-input:focus { outline: none; border-color: #CCFF00; box-shadow: 0 0 15px rgba(204,255,0,0.2); }
+        
+        .step-icon { width: 40px; height: 40px; color: #CCFF00; margin: 0 auto 10px auto; }
+
+        @keyframes fadeInDown { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
+        .animate-fade-in { animation: fadeInDown 0.3s ease-out forwards; }
+        
+        .seal-wrapper { position: absolute; top: -35px; right: -25px; z-index: 40; filter: drop-shadow(2px 5px 5px rgba(0,0,0,0.6)); pointer-events: none; }
+        .certificate-seal { width: 90px; height: 90px; background: radial-gradient(circle at 30% 30%, #ffe066 0%, #dca43e 70%, #b8860b 100%); display: flex; align-items: center; justify-content: center; text-align: center; transform: rotate(12deg); clip-path: polygon(50% 0%, 58% 9%, 71% 5%, 75% 15%, 88% 15%, 87% 26%, 98% 31%, 92% 41%, 100% 50%, 92% 59%, 98% 69%, 87% 74%, 88% 85%, 75% 85%, 71% 95%, 58% 91%, 50% 100%, 42% 91%, 29% 95%, 25% 85%, 12% 85%, 13% 74%, 2% 69%, 8% 59%, 0% 50%, 8% 41%, 2% 31%, 13% 26%, 12% 15%, 25% 15%, 29% 5%, 42% 9%); }
+        .certificate-seal::before { content: ''; position: absolute; width: 70%; height: 70%; border: 1px dashed rgba(255, 255, 255, 0.7); border-radius: 50%; z-index: 1; }
+        .certificate-seal-text { color: #4a3411; font-weight: 900; font-size: 10px; text-transform: uppercase; line-height: 1.1; letter-spacing: 0.5px; z-index: 2; text-shadow: 1px 1px 0px rgba(255,255,255,0.4); }
+
+        /* FAQ Styles */
+        .faq-icon { transition: transform 0.3s ease; display: inline-block; }
+        .faq-icon.rotate-45 { transform: rotate(45deg); color: #CCFF00; }
+        .faq-content { max-height: 0; overflow: hidden; transition: max-height 0.3s ease-out; }
+
+        /* HYBRID INPUT HIDE SPINNERS */
+        input[type="number"]::-webkit-inner-spin-button, 
+        input[type="number"]::-webkit-outer-spin-button { -webkit-appearance: none; margin: 0; }
+        input[type="number"] { -moz-appearance: textfield; }
+    </style>
+</head>
+<body class="bg-space text-white font-sans antialiased min-h-screen flex flex-col relative overflow-x-hidden">
+
+    <nav class="fixed top-0 w-full bg-space/90 backdrop-blur-md z-50 border-b border-gray-800">
+        <div class="max-w-6xl mx-auto px-3 md:px-6 py-4 flex justify-between items-center">
+            <div class="font-black text-lg md:text-2xl tracking-tighter uppercase cursor-pointer" onclick="switchView('view-home')">
+                <span class="text-white">KaufeDeinen</span><span class="text-neon drop-shadow-[0_0_8px_rgba(204,255,0,0.6)]">Zins</span>
+            </div>
+            <div class="flex gap-2 md:gap-6 font-bold text-[9px] md:text-sm uppercase tracking-wide flex-wrap justify-end items-center">
+                <a onclick="switchView('view-home')" id="nav-home" class="nav-link text-gray-300 active hidden md:block">Start</a>
+                <a onclick="switchView('view-how')" id="nav-how" class="nav-link text-gray-300"><span class="hidden md:inline">Das </span>Prinzip</a>
+                <a onclick="switchView('view-comp')" id="nav-comp" class="nav-link text-gray-300">Spar-Check</a>
+                <a onclick="switchView('view-riester')" id="nav-riester" class="nav-link text-cyber drop-shadow-[0_0_5px_rgba(138,43,226,0.6)]">Familie</a>
+                <span class="text-gray-700 hidden md:inline">|</span>
+                <a onclick="openCheckout('nav')" id="nav-checkout" class="nav-link text-white font-black px-2 py-1 bg-white/10 rounded-md hover:bg-white/20 transition-all">Kasse<span class="hidden md:inline"> / Antrag</span></a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="relative w-full flex-grow pt-[80px]">
+        
+        <div class="fixed top-1/4 -left-20 md:left-1/4 w-72 h-72 md:w-96 md:h-96 bg-cyber rounded-full mix-blend-screen filter blur-[100px] md:blur-[120px] opacity-20 pointer-events-none"></div>
+        <div class="fixed bottom-1/4 -right-20 md:right-1/4 w-72 h-72 md:w-96 md:h-96 bg-neon rounded-full mix-blend-screen filter blur-[100px] md:blur-[120px] opacity-10 pointer-events-none"></div>
+
+        <div id="view-home" class="view-section active-view flex-col items-center w-full">
+            <section class="relative flex flex-col justify-center items-center px-4 md:px-6 text-center min-h-[85vh] w-full">
+                <div class="z-10 max-w-4xl w-full">
+                    <div class="inline-block px-4 py-2 bg-panel border border-cyber text-cyber text-xs md:text-sm font-bold uppercase tracking-wider rounded-full mb-6">Sicher in die eigenen vier Wände</div>
+                    <h1 class="text-4xl md:text-7xl font-black uppercase tracking-tighter leading-tight mb-6">Die Zinsrevolution<br><span class="text-neon drop-shadow-[0_0_15px_rgba(204,255,0,0.5)]">Kaufe Deinen Zins</span></h1>
+                    <p class="text-base md:text-2xl text-gray-300 mb-10 max-w-2xl mx-auto font-medium px-2">Mache dich unabhängig von den schwankenden Bauzinsen der Banken. Sichere dir noch heute planbare Traumzinsen für deine Zukunft.</p>
+                    <div class="flex flex-col md:flex-row justify-center gap-4 mt-8">
+                        <button onclick="document.getElementById('configurator').scrollIntoView({ behavior: 'smooth' });" class="bg-neon text-space font-black text-lg px-8 py-4 rounded-lg hover:bg-white transition-colors uppercase shadow-[0_0_20px_rgba(204,255,0,0.5)]">Zins-Rechner starten ?</button>
+                        <button onclick="switchView('view-riester')" class="bg-transparent border-2 border-cyber text-cyber font-black text-sm md:text-lg px-8 py-4 rounded-lg hover:bg-cyber hover:text-white transition-colors uppercase">Zu den Familien-Zulagen</button>
+                    </div>
+                </div>
+            </section>
+            
+            <section id="configurator" class="py-10 px-4 md:px-6 w-full z-10 mb-20">
+                <div class="max-w-3xl mx-auto bg-panel border border-cyber rounded-2xl p-6 md:p-12 shadow-[0_0_40px_rgba(138,43,226,0.15)] relative overflow-hidden">
+                    <h2 class="text-2xl md:text-3xl font-black uppercase mb-2 text-center md:text-left">Dein Planungs-Dashboard</h2>
+                    <p class="text-sm md:text-base text-gray-400 mb-10 text-center md:text-left">Definiere deinen Einsatz und plane deinen sicheren Weg ins Eigenheim.</p>
+                    
+                    <div class="space-y-8">
+                        
+                        <div class="bg-space p-4 md:p-6 rounded-xl border border-gray-800 text-center w-full">
+                            <h3 class="font-bold text-base md:text-lg mb-4 text-gray-300 uppercase tracking-widest transition-all duration-300" id="tariffTitleDisplay">
+                                Wähle deinen Wunschzins 
+                                <span class="block text-xs md:text-sm text-gray-500 font-medium mt-1 normal-case tracking-normal" id="tariffDescDisplay">(Fokus auf maximale Zins-Ersparnis)</span>
+                            </h3>
+                            <div class="flex justify-between items-center gap-3 md:gap-6 w-full px-2 mt-6">
+                                <label class="cursor-pointer group flex-1 max-w-[100px] relative">
+                                    <input type="radio" name="tariff" value="1.0" class="tariff-radio hidden" checked onchange="updateAll(); calculateRiester();">
+                                    <div class="w-full aspect-square rounded-full border-2 border-gray-700 flex flex-col items-center justify-center transition-all bg-panel hover:border-neon/50">
+                                        <span class="tariff-title font-black text-lg md:text-2xl text-gray-400 transition-colors">1,0%<sup class="text-xs md:text-sm font-bold">*</sup></span>
+                                    </div>
+                                </label>
+                                <label class="cursor-pointer group flex-1 max-w-[100px] relative">
+                                    <input type="radio" name="tariff" value="1.25" class="tariff-radio hidden" onchange="updateAll(); calculateRiester();">
+                                    <div class="w-full aspect-square rounded-full border-2 border-gray-700 flex flex-col items-center justify-center transition-all bg-panel hover:border-neon/50">
+                                        <span class="tariff-title font-black text-lg md:text-2xl text-gray-400 transition-colors">1,25%<sup class="text-xs md:text-sm font-bold">*</sup></span>
+                                    </div>
+                                </label>
+                                <label class="cursor-pointer group flex-1 max-w-[100px] relative">
+                                    <input type="radio" name="tariff" value="2.35" class="tariff-radio hidden" onchange="updateAll(); calculateRiester();">
+                                    <div class="w-full aspect-square rounded-full border-2 border-gray-700 flex flex-col items-center justify-center transition-all bg-panel hover:border-neon/50">
+                                        <span class="tariff-title font-black text-lg md:text-2xl text-gray-400 transition-colors">2,35%<sup class="text-xs md:text-sm font-bold">*</sup></span>
+                                        <svg class="w-4 h-4 md:w-5 md:h-5 mt-1 text-gray-500 group-hover:text-neon tariff-title transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
+                                    </div>
+                                </label>
+                            </div>
+                        </div>
+                        
+                        <div class="w-full">
+                            <div class="flex justify-between mb-2">
+                                <label class="font-bold text-base md:text-lg">Dein Alter</label>
+                                <div class="flex items-center">
+                                    <span id="ageValWrap" class="cursor-pointer hover:opacity-80 transition-opacity text-neon font-black text-lg md:text-xl" onclick="openInput('age')"><span id="ageVal">21</span> Jahre</span>
+                                    <input type="number" inputmode="numeric" pattern="[0-9]*" id="ageInput" class="hidden w-20 text-center bg-space border border-neon text-neon font-black text-lg px-2 rounded outline-none" onblur="closeInput('age', 'updateAll')" onkeypress="if(event.key==='Enter') this.blur();">
+                                </div>
+                            </div>
+                            <input type="range" id="age" min="16" max="99" value="21" class="w-full" oninput="updateAll()">
+                            <p id="ageBadge" class="text-xs md:text-sm text-cyber mt-2 font-bold transition-opacity">Staatlicher Jung-Sparer Bonus möglich</p>
+                        </div>
+                        
+                        <div id="rateBox" class="bg-space p-4 rounded-xl border border-gray-800 w-full transition-all duration-300 relative">
+                            <div class="flex justify-between mb-2">
+                                <label id="rateLabel" class="font-bold text-base md:text-lg transition-colors duration-300">Dein mtl. Einsatz</label>
+                                <div class="flex items-center">
+                                    <span id="rateValWrap" class="cursor-pointer hover:opacity-80 transition-opacity text-neon font-black text-lg md:text-xl" onclick="openInput('rate')"><span id="rateVal">200</span> € / Monat</span>
+                                    <input type="number" inputmode="numeric" pattern="[0-9]*" id="rateInput" class="hidden w-28 text-center bg-space border border-neon text-neon font-black text-lg px-2 rounded outline-none" onblur="closeInput('rate', 'updateFromRate')" onkeypress="if(event.key==='Enter') this.blur();">
+                                </div>
+                            </div>
+                            <input type="range" id="rate" min="20" max="2000" step="10" value="200" class="w-full" oninput="updateFromRate()">
+                            
+                            <div class="mt-6 p-4 rounded-xl border border-neon bg-black/60 flex items-center justify-between gap-2">
+                                <div><span class="font-bold text-neon text-sm md:text-lg uppercase">Beschleunigte Verfügbarkeit</span><span class="text-[10px] md:text-xs text-gray-400 block mt-1">Höhere Sparquote (4 statt 2 Promille)</span></div>
+                                <label class="relative inline-flex items-center cursor-pointer shrink-0">
+                                    <input type="checkbox" id="turbo" class="sr-only peer" checked onchange="toggleTurbo()">
+                                    <div class="w-12 h-6 md:w-14 md:h-7 bg-gray-700 rounded-full peer peer-checked:after:translate-x-full after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 md:after:h-6 md:after:w-6 after:transition-all peer-checked:bg-neon"></div>
+                                </label>
+                            </div>
+                        </div>
+                        
+                        <div class="bg-space p-4 rounded-xl border border-gray-800 w-full">
+                            <div class="flex justify-between mb-2">
+                                <label class="font-bold text-base md:text-lg">Dein Ziel-Volumen</label>
+                                <div class="flex items-center">
+                                    <span id="volumeValWrap" class="cursor-pointer hover:opacity-80 transition-opacity text-white font-black text-lg md:text-xl" onclick="openInput('volume')"><span id="volumeVal">50.000</span> €</span>
+                                    <input type="number" inputmode="numeric" pattern="[0-9]*" id="volumeInput" class="hidden w-32 text-center bg-space border border-white text-white font-black text-lg px-2 rounded outline-none" onblur="closeInput('volume', 'updateFromVolume')" onkeypress="if(event.key==='Enter') this.blur();">
+                                </div>
+                            </div>
+                            <input type="range" id="volume" min="10000" max="500000" step="1000" value="50000" class="w-full" oninput="updateFromVolume()">
+                        </div>
+
+                        <div class="bg-space p-4 rounded-xl border border-cyber w-full">
+                            <div class="flex justify-between mb-2">
+                                <label class="font-bold text-base md:text-lg text-cyber">Einmalzahlung (Optional)</label>
+                                <div class="flex items-center">
+                                    <span id="lumpSumValWrap" class="cursor-pointer hover:opacity-80 transition-opacity text-cyber font-black text-lg md:text-xl" onclick="openInput('lumpSum')"><span id="lumpSumVal">0</span> €</span>
+                                    <input type="number" inputmode="numeric" pattern="[0-9]*" id="lumpSumInput" class="hidden w-28 text-center bg-space border border-cyber text-cyber font-black text-lg px-2 rounded outline-none" onblur="closeInput('lumpSum', 'updateAll')" onkeypress="if(event.key==='Enter') this.blur();">
+                                </div>
+                            </div>
+                            <input type="range" id="lumpSum" min="0" max="50000" step="500" value="0" class="w-full" oninput="updateAll()">
+                        </div>
+                        
+                        <div class="bg-space p-4 md:p-6 rounded-xl border border-gray-800 w-full">
+                            <h3 class="font-bold text-gray-400 uppercase tracking-widest mb-4 text-xs md:text-sm">Zusätzliche Förderungen</h3>
+                            <div class="space-y-4">
+                                <label class="flex items-center cursor-pointer group">
+                                    <input type="checkbox" id="married" class="cyber-checkbox w-6 h-6 rounded appearance-none bg-panel border-2 shrink-0" onchange="updateAll()">
+                                    <span class="ml-3 text-sm md:text-lg group-hover:text-neon text-gray-300 font-bold">Verheiratet (Doppelte Fördergrenze)</span>
+                                </label>
+                                
+                                <div class="flex flex-col">
+                                    <label class="flex items-center cursor-pointer group">
+                                        <input type="checkbox" id="vl" class="cyber-checkbox w-6 h-6 rounded appearance-none bg-panel border-2 shrink-0" onchange="toggleVlInput(); updateAll()">
+                                        <span class="ml-3 text-sm md:text-lg group-hover:text-cyber font-bold text-gray-300">Arbeitgeber zahlt vermögenswirksame Leistungen</span>
+                                    </label>
+                                    
+                                    <div id="vlInputContainer" class="hidden mt-4 pt-4 border-t border-gray-800 pl-9">
+                                        <div class="flex justify-between mb-2">
+                                            <label class="text-xs md:text-sm text-gray-400 uppercase font-bold">Mtl. VL-Betrag vom Chef</label>
+                                            <div class="flex items-center">
+                                                <span id="vlAmountValWrap" class="cursor-pointer hover:opacity-80 transition-opacity text-cyber font-black text-sm md:text-base" onclick="openInput('vlAmount')"><span id="vlAmountVal">40</span> €</span>
+                                                <input type="number" inputmode="numeric" pattern="[0-9]*" id="vlAmountInput" class="hidden w-20 text-center bg-space border border-cyber text-cyber font-black text-sm px-2 rounded outline-none" onblur="closeInput('vlAmount', 'updateAll')" onkeypress="if(event.key==='Enter') this.blur();">
+                                            </div>
+                                        </div>
+                                        <input type="range" id="vlAmount" min="0" max="40" step="1" value="40" class="w-full" oninput="updateAll()">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="mt-10 bg-space border-2 border-neon p-4 md:p-8 rounded-xl relative w-full">
+                            <div class="absolute -top-4 left-4 md:left-6 bg-neon text-space font-black px-3 md:px-4 py-1 uppercase rounded-full text-xs md:text-sm">Dein Finanz-Plan</div>
+                            <ul class="space-y-4 mt-4 md:mt-2">
+                                <li class="flex justify-between items-center text-sm md:text-xl border-b border-gray-800 pb-3"><span class="text-gray-300">Gesichertes Volumen:</span><span class="font-black text-xl md:text-2xl text-white"><span id="resultVolume">50.000</span> €</span></li>
+                                <li class="flex justify-between items-center text-sm md:text-xl"><span class="text-gray-300">Garantierter Darlehenszins:</span><span class="font-black text-xl md:text-2xl text-white"><span id="resultTariff">1,0</span> %<sup class="text-xs md:text-sm font-bold">*</sup></span></li>
+                                <li class="flex flex-col md:flex-row justify-between md:items-center text-sm md:text-xl bg-gray-900 p-3 rounded-lg border border-gray-700 gap-1"><span class="text-gray-300 font-bold">? Verfügbar in:</span><span id="zuteilungContainer" class="font-black text-lg md:text-xl text-white"></span></li>
+                                <li id="timeSkipResult" class="flex flex-col md:flex-row justify-between md:items-center text-sm md:text-xl bg-cyber/20 p-3 rounded-lg border border-cyber hidden gap-1"><span class="text-cyber font-bold text-xs md:text-lg uppercase">Zeitersparnis:</span><span class="font-black text-lg md:text-xl text-cyber">überspringt <span id="timeSkipVal"></span> ?</span></li>
+                                
+                                <li class="flex justify-between items-center text-sm md:text-xl pt-2"><span class="text-gray-300">Wohnungsbauprämie (p.a.):</span><span class="font-black text-xl md:text-2xl text-white">+ <span id="wopVal">60</span> €</span></li>
+                                <li id="vlResult" class="flex justify-between items-center text-sm md:text-xl hidden"><span class="text-gray-300">Arbeitgeber-Zuschuss (VL mtl.):</span><span class="font-black text-lg md:text-xl text-white">+ <span id="vlResultAmount">40</span> €</span></li>
+                                
+                                <li id="totalSubsidiesResult" class="flex flex-col md:flex-row justify-between items-center text-sm md:text-xl border-t border-gray-700 pt-4 mt-2 hidden">
+                                    <span class="text-neon font-bold uppercase text-xs md:text-sm">Gesamtförderung (Laufzeit):</span>
+                                    <span class="font-black text-2xl md:text-3xl text-neon">+ <span id="totalFoerderungVal">0</span> €</span>
+                                </li>
+                                
+                                <li class="flex flex-col border-t border-gray-700 pt-3 mt-2">
+                                    <div class="flex justify-between items-center text-sm md:text-xl w-full">
+                                        <span class="text-gray-400 text-xs md:text-sm">Einmalige Abschlussgebühr:</span>
+                                        <span class="font-bold text-lg md:text-xl text-white"><span id="akDisplayVal">800</span> €</span>
+                                    </div>
+                                    <div class="text-xs md:text-sm text-gray-500 leading-relaxed mt-2 text-left w-full">
+                                        Diese Gebühr <strong class="text-gray-300 font-bold">muss nicht</strong> separat bezahlt werden, sondern wird bequem mit deinen laufenden Raten und den staatlichen Zulagen verrechnet. 
+                                        <span class="text-neon block mt-1 font-bold tracking-wide" id="standardAmortisation" style="display: none;">
+                                        </span>
+                                    </div>
+                                </li>
+                            </ul>
+                            <button onclick="openCheckout('standard')" class="w-full mt-8 bg-neon text-space font-black text-lg md:text-xl py-4 rounded-lg hover:bg-white transition-colors uppercase shadow-[0_0_20px_rgba(204,255,0,0.4)] transform hover:scale-[1.02]">
+                                Konditionen sichern
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <div id="view-how" class="view-section flex-col items-center py-10 px-4 md:px-6 z-10 min-h-[85vh] w-full">
+            <div class="max-w-4xl w-full text-center mt-10">
+                <h3 class="text-neon drop-shadow-[0_0_10px_rgba(204,255,0,0.5)] font-black uppercase tracking-widest text-lg md:text-2xl mb-4">Kaufe Deinen Zins.</h3>
+                
+                <div class="mb-16">
+                    <h2 class="text-3xl md:text-5xl font-black uppercase mb-4 text-white leading-tight">Haus abbezahlen,<br><span class="text-cyber">bevor es gekauft wurde.</span></h2>
+                    <p class="text-gray-400 text-lg md:text-xl mb-10">Geduld zahlt sich aus. Wer in die Zukunft plant und heute seinen Zins sichert, zahlt später extrem viel weniger an die Bank.</p>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 text-left">
+                        <div class="bg-space p-6 rounded-2xl border border-gray-800 shadow-lg hover:border-neon transition-colors">
+                            <h4 class="text-neon font-black uppercase mb-2">Sicherheit & Planbarkeit</h4>
+                            <p class="text-sm text-gray-300 leading-relaxed">Statt Geld blind in stark schwankende Anlagen wie Krypto (BTC) oder Aktien-ETFs zu stecken, kaufst du dir hier ein festes Fundament. Gerade für junge Menschen genial: Du weißt heute schon auf den Cent genau, wie günstig dein Zins in 10 Jahren ist.</p>
+                        </div>
+                        <div class="bg-space p-6 rounded-2xl border border-gray-800 shadow-lg hover:border-cyber transition-colors">
+                            <h4 class="text-cyber font-black uppercase mb-2">Der Perfekte Grundbaustein</h4>
+                            <p class="text-sm text-gray-300 leading-relaxed">Bereits Summen ab 50.000 € bilden ein starkes Fundament. Damit kannst du später problemlos die Kaufnebenkosten abdecken oder das Kapital flexibel für Renovierungen, Sanierungen oder gezielte Sondertilgungen einsetzen.</p>
+                        </div>
+                        <div class="bg-space p-6 rounded-2xl border border-gray-800 shadow-lg hover:border-white transition-colors">
+                            <h4 class="text-white font-black uppercase mb-2">Maximale Flexibilität</h4>
+                            <p class="text-sm text-gray-300 leading-relaxed">Das Leben ändert sich – dein Vertrag passt sich an. Du kannst deine Zahlungen jederzeit extrem flexibel anpassen. <strong>Schon gewusst?</strong> Eine Einmalzahlung (z.B. Umschichtung vom Sparbuch) pusht deinen Vertrag enorm und verkürzt die Wartezeit erheblich!</p>
+                        </div>
+                        <div class="bg-space p-6 rounded-2xl border border-gray-800 shadow-lg hover:border-white transition-colors">
+                            <h4 class="text-white font-black uppercase mb-2">Die Anschlussfinanzierung</h4>
+                            <p class="text-sm text-gray-300 leading-relaxed">Du hast bereits einen laufenden Hauskredit abgeschlossen? Dann lass die <em>Kaufe Deinen Zins</em>-Strategie parallel mitlaufen! So bereitest du dich perfekt vor und hast pünktlich zum Zinsauslauf deiner alten Finanzierung den bestmöglichen Anschlusszins parat.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <h3 class="text-2xl md:text-3xl font-black uppercase mb-8">In 5 einfachen Schritten zum Zins-Lock</h3>
+                <div class="grid grid-cols-2 md:grid-cols-5 gap-4 md:gap-2 mb-16 text-center">
+                    <div class="bg-panel p-4 rounded-xl border border-gray-800 cursor-pointer hover:border-neon transition-colors group" onclick="switchView('view-home', true)">
+                        <svg class="step-icon group-hover:scale-110 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4"></path></svg>
+                        <h4 class="font-bold text-white text-sm uppercase">1. Konfigurieren</h4>
+                        <p class="text-xs text-gray-500 mt-1">Rechner starten</p>
+                    </div>
+                    <div class="bg-panel p-4 rounded-xl border border-gray-800 cursor-pointer hover:border-neon transition-colors group" onclick="openCheckout('standard')">
+                        <svg class="step-icon group-hover:scale-110 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
+                        <h4 class="font-bold text-white text-sm uppercase">2. Formular</h4>
+                        <p class="text-xs text-gray-500 mt-1">Antrag öffnen</p>
+                    </div>
+                    <div class="bg-panel p-4 rounded-xl border border-gray-800">
+                        <svg class="step-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"></path></svg>
+                        <h4 class="font-bold text-white text-sm uppercase">3. Telefonat</h4>
+                        <p class="text-xs text-gray-500 mt-1">Wir klären offene Fragen.</p>
+                    </div>
+                    <div class="bg-panel p-4 rounded-xl border border-gray-800">
+                        <svg class="step-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>
+                        <h4 class="font-bold text-white text-sm uppercase">4. Unterlagen</h4>
+                        <p class="text-xs text-gray-500 mt-1">Du erhältst alles per Mail.</p>
+                    </div>
+                    <div class="bg-panel p-4 rounded-xl border border-gray-800 col-span-2 md:col-span-1">
+                        <svg class="step-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path></svg>
+                        <h4 class="font-bold text-white text-sm uppercase">5. ID-Check</h4>
+                        <p class="text-xs text-gray-500 mt-1">Legitimation via App. Fertig.</p>
+                    </div>
+                </div>
+
+                <div class="bg-panel border border-neon rounded-3xl p-6 md:p-10 mb-20 shadow-[0_0_30px_rgba(204,255,0,0.15)] text-left">
+                    <h3 class="text-2xl md:text-3xl font-black uppercase mb-2 text-center md:text-left">Budget-Check</h3>
+                    <p class="text-gray-400 mb-8 text-center md:text-left">Finde heraus, welches Potenzial in deinem monatlichen Überschuss steckt.</p>
+                    
+                    <div class="flex flex-col md:flex-row gap-8 items-center">
+                        <div class="flex-1 space-y-8 w-full">
+                            <div>
+                                <div class="flex justify-between mb-2">
+                                    <label class="font-bold text-gray-300 text-sm md:text-base">Mtl. Netto-Einnahmen</label>
+                                    <div class="flex items-center">
+                                        <span id="budgetInValWrap" class="cursor-pointer hover:opacity-80 transition-opacity text-white font-black" onclick="openInput('budgetIn')"><span id="budgetInVal">2.500</span> €</span>
+                                        <input type="number" inputmode="numeric" pattern="[0-9]*" id="budgetInInput" class="hidden w-24 text-center bg-space border border-white text-white font-black px-2 rounded outline-none" onblur="closeInput('budgetIn', 'calcBudget')" onkeypress="if(event.key==='Enter') this.blur();">
+                                    </div>
+                                </div>
+                                <input type="range" id="budgetIn" min="1000" max="10000" step="100" value="2500" class="w-full" oninput="calcBudget()">
+                            </div>
+                            <div>
+                                <div class="flex justify-between mb-2">
+                                    <label class="font-bold text-gray-300 text-sm md:text-base">Mtl. Ausgaben (Miete, Leben)</label>
+                                    <div class="flex items-center">
+                                        <span id="budgetOutValWrap" class="cursor-pointer hover:opacity-80 transition-opacity text-white font-black" onclick="openInput('budgetOut')"><span id="budgetOutVal">1.800</span> €</span>
+                                        <input type="number" inputmode="numeric" pattern="[0-9]*" id="budgetOutInput" class="hidden w-24 text-center bg-space border border-white text-white font-black px-2 rounded outline-none" onblur="closeInput('budgetOut', 'calcBudget')" onkeypress="if(event.key==='Enter') this.blur();">
+                                    </div>
+                                </div>
+                                <input type="range" id="budgetOut" min="500" max="8000" step="100" value="1800" class="w-full" oninput="calcBudget()">
+                            </div>
+                        </div>
+                        <div class="flex-1 w-full bg-space p-6 rounded-2xl border-2 border-gray-800 flex flex-col justify-center text-center">
+                            <span class="text-gray-400 font-bold uppercase text-xs tracking-widest mb-2">Dein monatlicher Überschuss</span>
+                            <span class="text-4xl font-black text-white mb-6"><span id="budgetFree">700</span> €</span>
+                            
+                            <div class="bg-neon/10 p-4 rounded-xl border border-neon">
+                                <span class="text-neon font-bold uppercase text-[10px] md:text-xs tracking-widest mb-1 block">Unsere Spar-Empfehlung</span>
+                                <span class="text-2xl md:text-3xl font-black text-neon mb-1 block"><span id="budgetRecRate">200</span> € / mtl.</span>
+                                <span class="text-gray-300 text-xs md:text-sm block">Sichert dir eine empfohlene Summe von <strong class="text-white block mt-1 text-lg"><span id="budgetRecVol">50.000</span> €</strong></span>
+                                <button onclick="applyBudgetAndCheckout()" class="mt-4 w-full bg-transparent border border-neon text-neon font-bold py-2 px-4 rounded-lg hover:bg-neon hover:text-space transition-colors uppercase text-xs md:text-sm">
+                                    Vorschlag übernehmen
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-panel border-2 border-gray-800 rounded-3xl p-6 md:p-12 relative shadow-[0_0_50px_rgba(0,0,0,0.8)] text-center mb-16">
+                    <h3 class="text-neon uppercase text-xs md:text-sm font-bold tracking-widest mb-2">Wie es funktioniert</h3>
+                    <h4 class="text-2xl md:text-4xl font-black uppercase mb-4 text-white leading-tight">Geduld zahlt sich aus</h4>
+                    <p class="text-gray-400 mb-10 max-w-2xl mx-auto text-sm md:text-base">Du baust dir mit einer überschaubaren Rate ein solides Fundament auf. Sobald das Ziel erreicht ist, hebeln wir dieses Fundament für dich und die Bank schießt den Rest als zinsgünstiges Darlehen dazu.</p>
+                    
+                    <div class="w-full h-16 md:h-24 bg-space rounded-xl border border-gray-700 flex overflow-hidden shadow-inner">
+                        <div class="w-[40%] bg-neon flex items-center justify-center border-r-4 border-space">
+                            <span class="text-space font-black text-xs md:text-lg uppercase px-2 text-center">Ansparphase<br><span class="text-[10px] md:text-xs font-bold block opacity-70">Eigenes Geld</span></span>
+                        </div>
+                        <div class="w-[60%] bg-cyber flex items-center justify-center relative overflow-hidden">
+                            <div class="absolute inset-0 bg-gradient-to-r from-transparent to-black/20 pointer-events-none"></div>
+                            <span class="text-white font-black text-xs md:text-lg uppercase px-2 text-center drop-shadow-md">Zinsgünstiges Darlehen<br><span class="text-[10px] md:text-xs font-bold block opacity-70">Geld von der Bank</span></span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mb-16 w-full max-w-4xl mx-auto text-left">
+                    <h3 class="text-2xl md:text-3xl font-black uppercase mb-8 text-center text-white">Häufig gestellte Fragen</h3>
+                    <div class="space-y-4">
+                        
+                        <div class="bg-panel border border-gray-800 rounded-xl overflow-hidden hover:border-gray-600 transition-colors duration-300">
+                            <button onclick="toggleFaq(this)" class="w-full text-left px-6 py-5 font-bold text-sm md:text-base flex justify-between items-center text-gray-200 hover:text-neon focus:outline-none">
+                                <span class="uppercase tracking-wide">Wie funktioniert es?</span>
+                                <span class="faq-icon text-xl text-gray-500 font-normal ml-4">+</span>
+                            </button>
+                            <div class="faq-content bg-space border-t border-gray-800">
+                                <p class="px-6 py-5 text-gray-400 text-sm md:text-base leading-relaxed">
+                                    Das Prinzip besteht aus zwei Phasen: Zuerst baust du in der Ansparphase mit deiner monatlichen Rate Eigenkapital auf (in der Regel 20 bis 25 % der Gesamtsumme). Sobald dieses Ziel erreicht ist, wird der Vertrag zugeteilt. Dann stellt dir die Bank das angesparte Guthaben plus das restliche Geld als extrem zinsgünstiges Darlehen für deine Immobilienpläne zur Verfügung.
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="bg-panel border border-gray-800 rounded-xl overflow-hidden hover:border-gray-600 transition-colors duration-300">
+                            <button onclick="toggleFaq(this)" class="w-full text-left px-6 py-5 font-bold text-sm md:text-base flex justify-between items-center text-gray-200 hover:text-neon focus:outline-none">
+                                <span class="uppercase tracking-wide">Bekomme ich wirklich so ein günstiges Darlehen?</span>
+                                <span class="faq-icon text-xl text-gray-500 font-normal ml-4">+</span>
+                            </button>
+                            <div class="faq-content bg-space border-t border-gray-800">
+                                <p class="px-6 py-5 text-gray-400 text-sm md:text-base leading-relaxed">
+                                    Korrekt! Wenn du den Vertrag heute abschließt, hast du später einen vertraglich garantierten Anspruch auf diesen Zinssatz. Voraussetzung für die Auszahlung des Darlehens ist dann lediglich – wie branchenüblich – deine entsprechende Bonität zum Zeitpunkt der Darlehensbeantragung.
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="bg-panel border border-gray-800 rounded-xl overflow-hidden hover:border-gray-600 transition-colors duration-300">
+                            <button onclick="toggleFaq(this)" class="w-full text-left px-6 py-5 font-bold text-sm md:text-base flex justify-between items-center text-gray-200 hover:text-neon focus:outline-none">
+                                <span class="uppercase tracking-wide">Lohnt es sich eine Zinssicherung für mein Kind zu machen?</span>
+                                <span class="faq-icon text-xl text-gray-500 font-normal ml-4">+</span>
+                            </button>
+                            <div class="faq-content bg-space border-t border-gray-800">
+                                <p class="px-6 py-5 text-gray-400 text-sm md:text-base leading-relaxed">
+                                    Definitiv! Je früher man beginnt, desto mächtiger ist der Zins- und Hebeleffekt. Wenn du heute für dein Kind einen Sparvertrag startest, sicherst du ihm die aktuell niedrigen Zinsen für die Zeit, in der es später vielleicht selbst bauen, kaufen oder modernisieren möchte. Zudem profitieren junge Menschen unter 25 Jahren oft von zusätzlichen staatlichen Förderungen (Junges-Leute-Bonus). Es ist das perfekte finanzielle Fundament für den Start ins Erwachsenenleben.
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="bg-panel border border-gray-800 rounded-xl overflow-hidden hover:border-gray-600 transition-colors duration-300">
+                            <button onclick="toggleFaq(this)" class="w-full text-left px-6 py-5 font-bold text-sm md:text-base flex justify-between items-center text-gray-200 hover:text-neon focus:outline-none">
+                                <span class="uppercase tracking-wide">Warum heute schon Zinsen sichern, wenn ich erst in 10 Jahren kaufe?</span>
+                                <span class="faq-icon text-xl text-gray-500 font-normal ml-4">+</span>
+                            </button>
+                            <div class="faq-content bg-space border-t border-gray-800">
+                                <p class="px-6 py-5 text-gray-400 text-sm md:text-base leading-relaxed">
+                                    Zinsen am Kapitalmarkt schwanken unvorhersehbar. Ein Zinsanstieg um nur 1-2 % kostet dich bei einer Baufinanzierung über die Jahre zehntausende Euro an Rendite- und Liquiditätsverlust. Mit unserer Strategie verabschiedest du dich vom "Hoffen" und kaufst dir heute die absolute Planbarkeit von morgen ein – das Fundament jedes soliden Unterfangens.
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="bg-panel border border-gray-800 rounded-xl overflow-hidden hover:border-gray-600 transition-colors duration-300">
+                            <button onclick="toggleFaq(this)" class="w-full text-left px-6 py-5 font-bold text-sm md:text-base flex justify-between items-center text-gray-200 hover:text-neon focus:outline-none">
+                                <span class="uppercase tracking-wide">Lohnt sich eine kleinere Summe als 50.000 €?</span>
+                                <span class="faq-icon text-xl text-gray-500 font-normal ml-4">+</span>
+                            </button>
+                            <div class="faq-content bg-space border-t border-gray-800">
+                                <p class="px-6 py-5 text-gray-400 text-sm md:text-base leading-relaxed">
+                                    Auf jeden Fall. Auch kleinere Beträge (z.B. 10.000 € oder 20.000 €) sind ein idealer Einstieg. Sie eignen sich hervorragend für spätere Modernisierungen, eine neue Heizung, ein neues Bad oder einfach als erster Baustein für dein späteres Eigenkapital. Du sicherst dir so schon heute die günstigen Konditionen für zukünftige Vorhaben.
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="bg-panel border border-gray-800 rounded-xl overflow-hidden hover:border-gray-600 transition-colors duration-300">
+                            <button onclick="toggleFaq(this)" class="w-full text-left px-6 py-5 font-bold text-sm md:text-base flex justify-between items-center text-gray-200 hover:text-neon focus:outline-none">
+                                <span class="uppercase tracking-wide">Ist mein eingesetztes Kapital sicher?</span>
+                                <span class="faq-icon text-xl text-gray-500 font-normal ml-4">+</span>
+                            </button>
+                            <div class="faq-content bg-space border-t border-gray-800">
+                                <p class="px-6 py-5 text-gray-400 text-sm md:text-base leading-relaxed">
+                                    Zu 100 %. Dein Geld fließt in streng regulierte, deutsche Bausparkassen (z.B. BHW Bausparkasse). Es unterliegt der gesetzlichen Einlagensicherung, ist vor Marktschwankungen geschützt und vollständig ausfallsicher. Keine riskante Spekulation, sondern reiner, insolvenzgeschützter Vermögensaufbau.
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="bg-panel border border-gray-800 rounded-xl overflow-hidden hover:border-gray-600 transition-colors duration-300">
+                            <button onclick="toggleFaq(this)" class="w-full text-left px-6 py-5 font-bold text-sm md:text-base flex justify-between items-center text-gray-200 hover:text-neon focus:outline-none">
+                                <span class="uppercase tracking-wide">Was ist, wenn ich das Geld flexibel für andere Zwecke brauche?</span>
+                                <span class="faq-icon text-xl text-gray-500 font-normal ml-4">+</span>
+                            </button>
+                            <div class="faq-content bg-space border-t border-gray-800">
+                                <p class="px-6 py-5 text-gray-400 text-sm md:text-base leading-relaxed">
+                                    Du behältst maximale Flexibilität und bist zu keinem Zeitpunkt gezwungen, eine Immobilie zu kaufen. Das günstige Darlehen kannst du für sämtliche <strong>wohnwirtschaftliche Zwecke</strong> einsetzen – also auch für Sanierungen, Modernisierungen, eine neue Heizung oder zur Umschuldung bestehender Kredite (Anschlussfinanzierung). Benötigst du das Geld für etwas ganz anderes, kannst du dir dein angespartes Guthaben jederzeit frei auszahlen lassen.
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="bg-panel border border-gray-800 rounded-xl overflow-hidden hover:border-gray-600 transition-colors duration-300">
+                            <button onclick="toggleFaq(this)" class="w-full text-left px-6 py-5 font-bold text-sm md:text-base flex justify-between items-center text-gray-200 hover:text-neon focus:outline-none">
+                                <span class="uppercase tracking-wide">Warum fällt eine Abschlussgebühr an und rechnet sich das?</span>
+                                <span class="faq-icon text-xl text-gray-500 font-normal ml-4">+</span>
+                            </button>
+                            <div class="faq-content bg-space border-t border-gray-800">
+                                <p class="px-6 py-5 text-gray-400 text-sm md:text-base leading-relaxed">
+                                    Die einmalige Einrichtungsgebühr ist der "Kaufpreis" für dein Optionsrecht auf das extrem günstige Bankdarlehen der Zukunft. Betrachtet man die Zehntausende Euro Ersparnis durch den niedrigen Zins und addiert staatliche Zulagen (Wohnungsbauprämie, Arbeitnehmersparzulage oder Kinderzulagen) hinzu, amortisiert sich dieses kleine "Eintrittsgeld" in der Regel schon nach kürzester Zeit von ganz allein.
+                                </p>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="mb-20">
+                    <button onclick="openCheckout('standard')" class="bg-transparent border-2 border-neon text-neon font-black text-lg px-12 py-4 rounded-lg hover:bg-neon hover:text-space transition-colors uppercase shadow-[0_0_15px_rgba(204,255,0,0.2)]">
+                        Jetzt starten (Kaufe Deinen Zins) ?
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div id="view-comp" class="view-section flex-col items-center py-10 px-4 md:px-6 z-10 w-full min-h-[85vh]">
+            <div class="max-w-4xl w-full text-center mt-10">
+                <h3 class="text-white font-black uppercase tracking-widest text-base md:text-xl mb-3">Der reale Kosten-Vergleich</h3>
+                <h2 class="text-3xl md:text-5xl font-black uppercase mb-10 leading-tight">Zahlst du lieber <span class="text-red-500">Zinsen an die Bank</span>?<br>Oder <span class="text-neon">kaufst du Deinen Zins</span>?</h2>
+
+                <div class="bg-panel border-2 border-gray-800 rounded-3xl p-6 md:p-10 relative shadow-[0_0_50px_rgba(0,0,0,0.8)] mb-20">
+                    <div class="max-w-xl mx-auto mb-12 relative p-10 bg-space/50 rounded-2xl border border-gray-800">
+                        <div class="text-center">
+                            <h4 class="font-bold text-gray-400 uppercase text-xs tracking-widest mb-1">Gewünschter Darlehensbetrag</h4>
+                            <div class="flex items-center justify-center mt-2">
+                                <span id="compPriceValWrap" class="cursor-pointer hover:opacity-80 transition-opacity text-4xl md:text-6xl font-black text-white" onclick="openInput('priceSlider', 'compPriceVal')"><span id="compPriceVal">300.000</span> €</span>
+                                <input type="number" inputmode="numeric" pattern="[0-9]*" id="priceSliderInput" class="hidden w-48 text-center bg-space border-2 border-white text-white font-black text-4xl md:text-6xl px-2 py-1 rounded outline-none" onblur="closeInput('priceSlider', 'calculateSavingsComparison', 'compPriceVal')" onkeypress="if(event.key==='Enter') this.blur();">
+                            </div>
+                        </div>
+                        <input type="range" id="priceSlider" min="100000" max="800000" step="10000" value="300000" class="w-full mt-6" oninput="calculateSavingsComparison()">
+                    </div>
+
+                    <h3 class="font-black uppercase text-gray-400 mb-5">Vergleiche die Marktzinsen</h3>
+                    <div class="flex flex-wrap justify-center gap-3 mb-12">
+                        <label class="cursor-pointer"><input type="radio" name="compRate" value="5.0" class="comp-radio hidden" checked onchange="calculateSavingsComparison()"><div class="px-6 py-3 rounded-full border-2 border-gray-700 bg-space font-bold uppercase text-sm transition-all hover:border-white">Klassik (5,0%)</div></label>
+                        <label class="cursor-pointer"><input type="radio" name="compRate" value="2.35" class="comp-radio hidden" onchange="calculateSavingsComparison()"><div class="px-6 py-3 rounded-full border-2 border-gray-700 bg-space font-bold uppercase text-sm transition-all hover:border-cyber">Strategie (2,35%<sup class="text-[0.7em]">*</sup>)</div></label>
+                        <label class="cursor-pointer"><input type="radio" name="compRate" value="1.25" class="comp-radio hidden" onchange="calculateSavingsComparison()"><div class="px-6 py-3 rounded-full border-2 border-gray-700 bg-space font-bold uppercase text-sm transition-all hover:border-neon">Strategie (1,25%<sup class="text-[0.7em]">*</sup>)</div></label>
+                        <label class="cursor-pointer"><input type="radio" name="compRate" value="1.0" class="comp-radio hidden" onchange="calculateSavingsComparison()"><div class="px-6 py-3 rounded-full border-2 border-gray-700 bg-space font-bold uppercase text-sm transition-all hover:border-neon">Strategie (1,0%<sup class="text-[0.7em]">*</sup>)</div></label>
+                    </div>
+
+                    <div class="flex flex-col md:flex-row items-center justify-center gap-8 md:gap-16 mt-16 px-4">
+                        <div class="w-full md:w-1/3 flex flex-col items-center"><span class="font-bold text-gray-300 mb-3 uppercase text-xs md:text-sm">Finanzierungssumme</span><div class="w-full h-8 md:h-12 bg-white rounded-lg flex items-center justify-center border-4 border-white min-w-[fit-content] px-4"><span class="text-space font-black text-sm md:text-xl whitespace-nowrap"><span class="price-val">300.000 €</span></span></div></div>
+                        <div class="w-full md:w-1/3 flex flex-col items-center">
+                            <span id="interestTitle" class="font-bold text-red-500 mb-3 uppercase text-xs md:text-sm">Anfallende Zinskosten</span>
+                            <div id="interestBar" class="h-8 md:h-12 bg-red-600 rounded-lg flex items-center justify-center transition-all duration-300 border-4 border-red-600 min-w-[fit-content] px-4" style="width: 93%;">
+                                <span id="interestCostText" class="text-white font-black text-sm md:text-xl whitespace-nowrap"><span id="interestCostVal">279.000 €</span></span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="compPainBox" class="mt-16 p-6 bg-panel rounded-xl border border-red-700 shadow-[0_0_20px_rgba(185,28,28,0.2)]">
+                        <h4 class="text-red-500 font-black text-2xl uppercase mb-2">DER PREIS DES ABWARTENS (5,0%)</h4>
+                        <p class="text-gray-200 text-base md:text-lg">Bei herkömmlichen Marktzinsen zahlst du über die Laufzeit enorme Summen an die Bank. Insgesamt beläuft sich deine Rückzahlung auf <strong class="text-white"><span class="total-pay-val">579.000 €</span></strong>.</p>
+                    </div>
+                    <div id="compSaveBox" class="mt-16 p-6 bg-neon rounded-xl shadow-[0_0_20px_rgba(204,255,0,0.4)] hidden">
+                        <h4 class="text-space font-black text-2xl uppercase mb-2">DEIN VERMÖGENS-VORTEIL</h4>
+                        <p class="text-gray-900 text-base md:text-lg font-medium">Du hast clever geplant. Du sparst <strong class="text-space font-black text-xl"><span id="savedAmountVal">219.000 €</span> an Zinskosten</strong> im Vergleich zu einem teuren Bankkredit.</p>
+                    </div>
+                    
+                    <p class="text-xs text-gray-500 mt-6 text-center">Hinweis: Dieser Vergleich dient rein der mathematischen Veranschaulichung des Zins- und Hebeleffekts über eine angenommene Laufzeit von 30 Jahren und stellt kein verbindliches Finanzierungsangebot dar.</p>
+
+                    <div class="mt-10">
+                        <button onclick="openCheckout('standard')" class="bg-neon text-space font-black text-lg px-12 py-4 rounded-lg hover:bg-white transition-colors uppercase w-full md:w-auto shadow-[0_0_30px_rgba(204,255,0,0.5)]">Konditionen jetzt sichern</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="view-riester" class="view-section flex-col items-center py-10 px-4 md:px-6 z-10 w-full min-h-[85vh]">
+            <div class="max-w-3xl w-full mx-auto mt-10">
+                <div class="text-center mb-10">
+                    <h3 class="text-cyber drop-shadow-[0_0_10px_rgba(138,43,226,0.6)] font-black uppercase tracking-widest text-sm md:text-base mb-2">Staatliche Zulagen</h3>
+                    <h2 class="text-3xl md:text-5xl font-black uppercase mb-4">Das <span class="text-white">Familien</span>-<span class="text-cyber">Upgrade</span></h2>
+                </div>
+
+                <div class="bg-panel border-2 border-cyber rounded-3xl p-6 md:p-10 shadow-[0_0_40px_rgba(138,43,226,0.2)]">
+
+                    <div class="space-y-8 mb-10">
+                        <div class="w-full">
+                            <div class="flex justify-between mb-2">
+                                <label class="font-bold text-gray-300 text-sm md:text-lg uppercase">Dein Brutto-Einkommen (Vorjahr)</label>
+                                <div class="flex items-center">
+                                    <span id="riesterIncomeValWrap" class="cursor-pointer hover:opacity-80 transition-opacity text-cyber font-black text-lg md:text-xl" onclick="openInput('riesterIncome')"><span id="riesterIncomeVal">20.000</span> €</span>
+                                    <input type="number" inputmode="numeric" pattern="[0-9]*" id="riesterIncomeInput" class="hidden w-28 text-center bg-space border border-cyber text-cyber font-black text-lg px-2 rounded outline-none" onblur="closeInput('riesterIncome', 'calculateRiester')" onkeypress="if(event.key==='Enter') this.blur();">
+                                </div>
+                            </div>
+                            <input type="range" id="riesterIncome" min="0" max="100000" step="1000" value="20000" class="w-full" oninput="calculateRiester()">
+                        </div>
+
+                        <div class="bg-space p-4 rounded-xl border border-gray-800 w-full">
+                            <label class="flex items-center cursor-pointer group mb-2">
+                                <input type="checkbox" id="riesterMarried" class="cyber-checkbox w-6 h-6 rounded appearance-none bg-panel border-2 shrink-0" onchange="togglePartnerSettings(); calculateRiester()">
+                                <span class="ml-3 text-sm md:text-lg font-bold text-gray-300">Wir sind verheiratet</span>
+                            </label>
+                            
+                            <div id="partnerSettings" class="hidden mt-4 pt-4 border-t border-gray-700">
+                                <div class="flex justify-between mb-2">
+                                    <label class="font-bold text-gray-400 text-xs md:text-sm uppercase">Brutto-Einkommen Partner</label>
+                                    <div class="flex items-center">
+                                        <span id="riesterPartnerIncomeValWrap" class="cursor-pointer hover:opacity-80 transition-opacity text-cyber font-black text-sm md:text-base" onclick="openInput('riesterPartnerIncome')"><span id="riesterPartnerIncomeVal">20.000</span> €</span>
+                                        <input type="number" inputmode="numeric" pattern="[0-9]*" id="riesterPartnerIncomeInput" class="hidden w-24 text-center bg-space border border-cyber text-cyber font-black text-sm px-2 rounded outline-none" onblur="closeInput('riesterPartnerIncome', 'calculateRiester')" onkeypress="if(event.key==='Enter') this.blur();">
+                                    </div>
+                                </div>
+                                <input type="range" id="riesterPartnerIncome" min="0" max="100000" step="1000" value="20000" class="w-full mb-6" oninput="calculateRiester()">
+                                
+                                <div class="flex items-center mt-2">
+                                    <label class="flex items-center cursor-pointer group flex-1">
+                                        <input type="checkbox" id="riesterPartnerOptOut" class="cyber-checkbox w-5 h-5 rounded appearance-none bg-panel border-2 shrink-0" onchange="calculateRiester()">
+                                        <span class="ml-3 text-xs md:text-sm text-gray-400">Auf Partner-Zulage verzichten (günstigere monatliche Rate)</span>
+                                    </label>
+                                    <div class="relative flex items-center group cursor-help ml-2">
+                                        <span class="text-gray-500 bg-gray-800 rounded-full w-5 h-5 flex items-center justify-center text-xs font-bold hover:bg-cyber hover:text-white transition-colors">?</span>
+                                        <div class="absolute bottom-full right-0 md:left-1/2 md:-translate-x-1/2 mb-2 hidden group-hover:block w-48 p-3 bg-space border border-cyber text-gray-300 text-xs rounded shadow-[0_0_15px_rgba(138,43,226,0.4)] z-50 font-normal">
+                                            Die staatliche Partner-Zulage beträgt aktuell <strong class="text-cyber">175 € pro Jahr</strong>. Wenn du darauf verzichtest, sinkt der nötige Eigenbeitrag für die Maximalförderung.
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div class="bg-space p-4 rounded-xl border border-gray-800">
+                                <label class="block font-bold text-gray-300 text-xs md:text-sm uppercase mb-3">Kinder (ab 2008)</label>
+                                <div class="flex justify-between items-center">
+                                    <div class="flex items-center">
+                                        <span id="kidsPostValWrap" class="cursor-pointer hover:opacity-80 transition-opacity text-neon font-black text-xl" onclick="openInput('riesterKidsPost', 'kidsPostVal')"><span id="kidsPostVal">0</span></span>
+                                        <input type="number" inputmode="numeric" pattern="[0-9]*" id="riesterKidsPostInput" class="hidden w-16 text-center bg-space border border-neon text-neon font-black text-xl px-2 rounded outline-none" onblur="closeInput('riesterKidsPost', 'calculateRiester', 'kidsPostVal')" onkeypress="if(event.key==='Enter') this.blur();">
+                                    </div>
+                                    <input type="range" id="riesterKidsPost" min="0" max="6" step="1" value="0" class="w-2/3" oninput="calculateRiester()">
+                                </div>
+                            </div>
+                            <div class="bg-space p-4 rounded-xl border border-gray-800">
+                                <label class="block font-bold text-gray-300 text-xs md:text-sm uppercase mb-3">Kinder (vor 2008)</label>
+                                <div class="flex justify-between items-center">
+                                    <div class="flex items-center">
+                                        <span id="kidsPreValWrap" class="cursor-pointer hover:opacity-80 transition-opacity text-white font-black text-xl" onclick="openInput('riesterKidsPre', 'kidsPreVal')"><span id="kidsPreVal">0</span></span>
+                                        <input type="number" inputmode="numeric" pattern="[0-9]*" id="riesterKidsPreInput" class="hidden w-16 text-center bg-space border border-white text-white font-black text-xl px-2 rounded outline-none" onblur="closeInput('riesterKidsPre', 'calculateRiester', 'kidsPreVal')" onkeypress="if(event.key==='Enter') this.blur();">
+                                    </div>
+                                    <input type="range" id="riesterKidsPre" min="0" max="6" step="1" value="0" class="w-2/3" oninput="calculateRiester()">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="bg-space border-2 border-gray-600 p-6 rounded-xl relative w-full mt-12">
+                        <div class="absolute -top-4 left-6 bg-neon text-space font-black px-4 py-1 uppercase rounded-full text-xs md:text-sm z-10">Deine Zulagen-Übersicht</div>
+                        
+                        <div class="flex flex-col gap-6 mt-4">
+                            
+                            <div class="flex flex-col md:flex-row justify-between md:items-center border-b border-gray-800 pb-4 gap-2 z-10">
+                                <span class="text-gray-300 text-sm md:text-lg flex items-center gap-2">
+                                    Geschenkt vom Staat (jedes Jahr):
+                                    <div class="relative flex items-center group cursor-help">
+                                        <span class="text-space bg-neon rounded-full w-5 h-5 flex items-center justify-center text-xs font-bold hover:scale-110 transition-transform">?</span>
+                                        <div class="absolute bottom-full left-0 md:left-1/2 md:-translate-x-1/2 mb-2 hidden group-hover:block w-64 p-3 bg-space border border-neon text-gray-300 text-xs rounded shadow-[0_0_15px_rgba(204,255,0,0.4)] z-50 font-normal">
+                                            <strong class="text-neon block mb-2 border-b border-gray-700 pb-1">Förder-Zusammensetzung:</strong>
+                                            <ul class="space-y-1 mb-2">
+                                                <li>• Grundzulage: <strong class="text-white">175 €</strong> p.a. (pro Erwachsenem)</li>
+                                                <li>• Kind (ab 2008): <strong class="text-white">300 €</strong> p.a.</li>
+                                                <li>• Kind (vor 2008): <strong class="text-white">185 €</strong> p.a.</li>
+                                            </ul>
+                                            <span class="text-[10px] text-gray-400 leading-tight block">Hinweis: Die Zahlung der Kinderzulagen ist an die Laufzeit des Kindergeldes gebunden. Fällt das Kindergeld weg, entfällt automatisch auch die entsprechende Kinderzulage in diesem Vertrag.</span>
+                                        </div>
+                                    </div>
+                                </span>
+                                <span class="font-black text-2xl md:text-3xl text-neon">+ <span id="riesterTotalZulage">1.075</span> €</span>
+                            </div>
+                            
+                            <div onclick="openCheckout('riester')" class="cursor-pointer bg-neon/10 border border-neon rounded-lg p-4 text-center transform hover:scale-[1.03] transition-all duration-300 relative z-20 group">
+                                <div class="seal-wrapper"><div class="certificate-seal"><span class="certificate-seal-text">Geschenkt<br>vom Staat</span></div></div>
+                                <span class="block text-neon font-bold uppercase text-xs md:text-sm tracking-widest mb-1">Dein Zulagen-Potenzial</span>
+                                <span class="font-black text-4xl md:text-5xl text-neon">+ <span id="riester15Years">16.125</span> €</span>
+                            </div>
+
+                            <div id="riesterMinBadge" class="transition-all duration-300 text-white py-2 rounded-lg text-xs md:text-sm text-center font-bold tracking-widest uppercase mt-2">
+                                </div>
+
+                            <div class="flex flex-col md:flex-row justify-between items-center bg-cyber/20 border border-cyber rounded-lg p-4 gap-4 z-10 relative mt-4">
+                                <div>
+                                    <span class="block text-cyber font-bold uppercase text-xs md:text-sm tracking-widest mb-1">Dein nötiger Eigenbeitrag</span>
+                                    <span class="text-gray-400 text-xs">Um die volle staatliche Förderung zu erhalten</span>
+                                </div>
+                                <div class="text-right shrink-0">
+                                    <span class="font-black text-3xl text-white"><span id="riesterMonthly">5,00</span> € <span class="text-lg">/ mtl.</span></span>
+                                </div>
+                            </div>
+                            
+                            <div class="mt-4 pt-4 border-t border-gray-800 flex flex-col gap-2">
+                                <div class="flex justify-between items-center text-sm md:text-xl w-full">
+                                    <span class="text-gray-400 text-xs md:text-sm">Einmalige Abschlussgebühr:</span>
+                                    <span class="font-bold text-lg md:text-xl text-white"><span id="riesterAbschlusskosten">800 €</span></span>
+                                </div>
+                                <div class="text-xs md:text-sm text-gray-500 leading-relaxed mt-2 text-left w-full">
+                                    Diese Gebühr <strong class="text-gray-300 font-bold">muss nicht</strong> separat bezahlt werden, sondern wird bequem mit deinen laufenden Raten und den staatlichen Zulagen verrechnet. 
+                                    <span class="text-neon block mt-1 font-bold tracking-wide" id="riesterAmortisation">
+                                        </span>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <div class="mt-8">
+                        <button onclick="openCheckout('riester')" class="bg-cyber text-white font-black text-lg px-12 py-4 rounded-lg hover:bg-white hover:text-cyber transition-all uppercase w-full shadow-[0_0_20px_rgba(138,43,226,0.3)] transform hover:scale-[1.02]">Familien-Förderung sichern ?</button>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <div id="view-checkout" class="view-section flex-col items-center py-10 px-4 md:px-6 z-10 w-full min-h-[85vh]">
+            <div class="max-w-4xl w-full mx-auto mt-10">
+                <div class="text-center mb-10">
+                    <div class="flex items-center justify-center gap-2 text-neon font-bold text-sm mb-2">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path></svg>
+                        SSL-Verschlüsselt
+                    </div>
+                    <h2 class="text-3xl md:text-5xl font-black uppercase mb-4"><span id="checkoutProductTitle" class="text-neon transition-colors duration-500">Zins-Strategie</span></h2>
+                </div>
+
+                <div class="flex flex-col gap-4 mb-6">
+                    <!-- Zins-Strategie Card -->
+                    <div id="checkoutCardStandard" class="bg-panel border border-gray-800 rounded-2xl p-4 md:p-6 flex flex-wrap justify-between items-center gap-6 shadow-[0_0_30px_rgba(0,0,0,0.5)] transition-all">
+                        <div class="flex flex-wrap gap-6 md:gap-12 text-center flex-1 justify-center">
+                            <div id="checkoutBlockStandard1" class="transition-all duration-300">
+                                <span class="text-gray-400 text-xs uppercase font-bold tracking-widest block mb-1">Gewähltes Volumen</span>
+                                <span class="text-3xl md:text-4xl font-black text-white"><span id="checkoutVolume">50.000</span> €</span>
+                            </div>
+                            <div id="checkoutBlockStandard2" class="transition-all duration-300">
+                                <span class="text-gray-400 text-xs uppercase font-bold tracking-widest block mb-1">Garantie-Zins</span>
+                                <span class="text-3xl md:text-4xl font-black text-neon"><span id="checkoutTariff">1,0</span> %<sup class="text-base md:text-lg font-bold">*</sup></span>
+                            </div>
+                        </div>
+                        <button onclick="removeFromCart('standard')" title="Entfernen" class="shrink-0 text-gray-600 hover:text-red-500 transition-colors p-2 rounded-lg hover:bg-red-500/10">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path></svg>
+                        </button>
+                    </div>
+                    <!-- Familien-Förderung Card -->
+                    <div id="checkoutCardRiester" class="hidden bg-panel border border-cyber rounded-2xl p-4 md:p-6 flex flex-wrap justify-between items-center gap-6 shadow-[0_0_30px_rgba(138,43,226,0.15)] transition-all">
+                        <div class="flex flex-wrap gap-6 md:gap-12 text-center flex-1 justify-center">
+                            <div id="checkoutBlockRiester1" class="transition-all duration-300">
+                                <span class="text-gray-400 text-xs uppercase font-bold tracking-widest block mb-1">Familien-Zulage (p.a.)</span>
+                                <span class="text-3xl md:text-4xl font-black text-white">+ <span id="checkoutRiesterPA">1.075</span> €</span>
+                            </div>
+                            <div id="checkoutBlockRiester2" class="transition-all duration-300">
+                                <span class="text-gray-400 text-xs uppercase font-bold tracking-widest block mb-1">15-Jahre Potenzial</span>
+                                <span class="text-3xl md:text-4xl font-black text-cyber">+ <span id="checkoutRiester15">16.125</span> €</span>
+                            </div>
+                        </div>
+                        <button onclick="removeFromCart('riester')" title="Entfernen" class="shrink-0 text-gray-600 hover:text-red-500 transition-colors p-2 rounded-lg hover:bg-red-500/10">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path></svg>
+                        </button>
+                    </div>
+                </div>
+                <!-- hidden divider kept for JS compat -->
+                <div id="checkoutDivider" class="hidden"></div>
+
+                <div class="max-w-3xl mx-auto bg-panel border-2 border-gray-800 rounded-3xl p-6 md:p-10 shadow-[0_0_40px_rgba(0,0,0,0.8)] relative">
+                    
+                    <form id="antragForm">
+                        <input type="hidden" name="ausgewaehltes_volumen" id="formHiddenVolume" value="Nicht gewählt">
+                        <input type="hidden" name="zinssatz" id="formHiddenTariff" value="0%">
+                        <input type="hidden" name="riester" id="formHiddenRiester" value="Nein">
+
+                        <!-- SCHRITT 1: Kontaktdaten -->
+                        <div id="step1-container">
+                            <h3 class="text-white font-black text-xl uppercase mb-6 tracking-wide">Schritt 1: Deine Kontaktdaten</h3>
+                            <div class="flex flex-col md:flex-row gap-5 mb-5">
+                                <div class="flex-1">
+                                    <label class="text-gray-400 text-xs uppercase font-bold block mb-2">Vorname</label>
+                                    <input type="text" name="vorname" id="formVorname" required class="neon-input w-full rounded-lg px-4 py-3 text-white">
+                                </div>
+                                <div class="flex-1">
+                                    <label class="text-gray-400 text-xs uppercase font-bold block mb-2">Nachname</label>
+                                    <input type="text" name="nachname" id="formNachname" required class="neon-input w-full rounded-lg px-4 py-3 text-white">
+                                </div>
+                            </div>
+                            <div class="mb-5">
+                                <label class="text-gray-400 text-xs uppercase font-bold block mb-2">E-Mail</label>
+                                <input type="email" name="email" id="formEmail" required class="neon-input w-full rounded-lg px-4 py-3 text-white">
+                            </div>
+                            <div class="mb-5">
+                                <label class="text-gray-400 text-xs uppercase font-bold block mb-2">Telefonnummer</label>
+                                <input type="tel" name="telefon" id="formTelefon" required class="neon-input w-full rounded-lg px-4 py-3 text-white" placeholder="+49 ...">
+                            </div>
+                            <div id="riester-extra-fields" class="hidden"></div>
+                            <label class="flex items-start gap-3 cursor-pointer mb-6">
+                                <input type="checkbox" id="formDsgvo" name="dsgvo" class="cyber-checkbox w-5 h-5 rounded appearance-none bg-panel border-2 shrink-0 mt-0.5">
+                                <span class="text-gray-400 text-xs leading-relaxed">Ich stimme der Verarbeitung meiner Daten zur Kontaktaufnahme und Angebotserstellung gemäß der <a onclick="switchView('view-datenschutz')" class="text-neon underline cursor-pointer">Datenschutzerklärung</a> zu.</span>
+                            </label>
+                            <p id="step1-error" class="hidden text-red-400 text-sm mb-4 font-bold">Bitte fülle alle Felder aus und stimme der Datenschutzerklärung zu.</p>
+                            <button type="button" onclick="submitStep1AndShowStep2(this)" class="w-full bg-neon text-space font-black text-lg py-4 rounded-xl hover:bg-white transition-colors uppercase shadow-[0_0_20px_rgba(204,255,0,0.4)]">
+                                Weiter →
+                            </button>
+                        </div>
+
+                        <!-- SCHRITT 2: Bestätigung -->
+                        <div id="step2-container" class="hidden">
+                            <h3 class="text-white font-black text-xl uppercase mb-6 tracking-wide">Schritt 2: Bestätigung</h3>
+                            <p class="text-gray-300 mb-8">Deine Kontaktdaten wurden übermittelt. Klicke jetzt auf „Antrag absenden", um deine Konditionen verbindlich anzufragen.</p>
+                            <button type="submit" class="w-full bg-neon text-space font-black text-lg py-4 rounded-xl hover:bg-white transition-colors uppercase shadow-[0_0_20px_rgba(204,255,0,0.4)]">
+                                Antrag absenden ✓
+                            </button>
+                        </div>
+
+                        <!-- SCHRITT 3: Erfolg -->
+                        <div id="step3-container" class="hidden text-center py-10">
+                            <div class="text-neon text-6xl mb-6">✓</div>
+                            <h3 class="text-white font-black text-2xl uppercase mb-4">Antrag gesendet!</h3>
+                            <p class="text-gray-300">Wir prüfen deine Daten und melden uns umgehend bei dir.</p>
+                        </div>
+                    </form>
+                    
+                    <button id="checkoutBackButton" onclick="switchView('view-home')" class="text-gray-500 hover:text-white uppercase text-sm font-bold mt-8 w-full text-center tracking-widest transition-colors">← Zurück</button>
+                </div>
+            </div>
+        </div>
+
+        <div id="view-impressum" class="view-section flex-col items-center py-10 px-4 md:px-6 z-10 w-full min-h-[85vh]">
+            <div class="max-w-3xl w-full mx-auto mt-10 bg-panel border border-gray-800 rounded-3xl p-6 md:p-12 text-left">
+                <h2 class="text-2xl md:text-4xl font-black uppercase mb-8 text-white">Impressum & Erstinformation</h2>
+                
+                <div class="space-y-6 text-gray-300 text-sm md:text-base leading-relaxed">
+                    <div>
+                        <h3 class="text-neon font-bold uppercase tracking-wide mb-2">Angaben gemäß § 5 DDG</h3>
+                        <p><strong>Mark Dietrich</strong><br>
+                        Gebietsleiter<br>
+                        Selbstständiger Partner (§ 84 HGB) für die Postbank Finanzberatung AG<br><br>
+                        <strong>Kontakt über:</strong><br>
+                        Postbank Finanzberatung AG<br>
+                        Hillmannplatz 13-15<br>
+                        28195 Bremen</p>
+                    </div>
+
+                    <div>
+                        <h3 class="text-neon font-bold uppercase tracking-wide mb-2">Kontakt</h3>
+                        <p>Telefon: 017621725717<br>
+                        E-Mail: mark.dietrich@db.com</p>
+                    </div>
+
+                    <div>
+                        <h3 class="text-neon font-bold uppercase tracking-wide mb-2">Aufsichtsbehörde & Register</h3>
+                        <p>Tätig als vertraglich gebundener Vermittler.<br>
+                        Zuständige Aufsichtsbehörde: Handelskammer Bremen - IHK für Bremen und Bremerhaven, Am Markt 13, 28195 Bremen<br>
+                        Vermittlerregister (www.vermittlerregister.info):<br>
+                        IHK-Reg.-Nr. (§ 34d GewO): D-KYVA-6N6Q4-81</p>
+                    </div>
+
+                    <div>
+                        <h3 class="text-neon font-bold uppercase tracking-wide mb-2">Schlichtungsstellen</h3>
+                        <p>Ombudsmann der privaten Bausparkassen<br>
+                        Postfach 30 15 55, 10749 Berlin<br>
+                        www.bausparkassen.de</p>
+                        
+                        <p class="mt-3">Kundenbeschwerdestelle beim Bundesverband deutscher Banken e.V.<br>
+                        Postfach 04 03 07, 10062 Berlin<br>
+                        www.bankenombudsmann.de</p>
+                    </div>
+                </div>
+                <button onclick="switchView('view-home')" class="text-gray-500 hover:text-white uppercase text-sm font-bold mt-10 w-full text-center tracking-widest transition-colors">? Zurück zur Startseite</button>
+            </div>
+        </div>
+
+        <div id="view-datenschutz" class="view-section flex-col items-center py-10 px-4 md:px-6 z-10 w-full min-h-[85vh]">
+            <div class="max-w-4xl w-full mx-auto mt-10 bg-panel border border-gray-800 rounded-3xl p-6 md:p-12 text-left">
+                <h2 class="text-2xl md:text-4xl font-black uppercase mb-8 text-white border-b border-gray-800 pb-4">Datenschutzerklärung</h2>
+                
+                <div class="space-y-6 text-gray-300 text-sm md:text-base leading-relaxed">
+                    
+                    <div>
+                        <h3 class="text-neon font-bold uppercase tracking-wide mb-2 text-lg">1. Datenschutz auf einen Blick</h3>
+                        <p class="mb-2"><strong class="text-white">Allgemeine Hinweise</strong><br>
+                        Die folgenden Hinweise geben einen einfachen Überblick darüber, was mit Ihren personenbezogenen Daten passiert, wenn Sie diese Website besuchen. Personenbezogene Daten sind alle Daten, mit denen Sie persönlich identifiziert werden können.</p>
+                        <p><strong class="text-white">Verantwortlicher</strong><br>
+                        Verantwortlich für die Datenerfassung auf dieser Website ist:<br>
+                        Mark Dietrich<br>
+                        Gebietsleiter / Selbstständiger Partner (HGB)<br>
+                        Kontakt über: Postbank Finanzberatung AG<br>
+                        Hillmannplatz 13-15<br>
+                        28195 Bremen<br>
+                        Telefon: 017621725717<br>
+                        E-Mail: mark.dietrich@db.com</p>
+                    </div>
+
+                    <div>
+                        <h3 class="text-neon font-bold uppercase tracking-wide mb-2 text-lg">2. Datenerfassung auf dieser Website</h3>
+                        <p class="mb-2"><strong class="text-white">Kontakt- und Anfrageformular</strong><br>
+                        Wenn Sie uns per Kontaktformular (Antragsstrecke) Anfragen zukommen lassen, werden Ihre Angaben aus dem Anfrageformular inklusive der von Ihnen dort angegebenen Kontaktdaten (Name, E-Mail-Adresse, Telefonnummer sowie berechnete Finanzdaten) zwecks Bearbeitung der Anfrage und für den Fall von Anschlussfragen bei uns gespeichert.</p>
+                        <p>Die Verarbeitung dieser Daten erfolgt auf Grundlage von Art. 6 Abs. 1 lit. b DSGVO, sofern Ihre Anfrage mit der Erfüllung eines Vertrags zusammenhängt oder zur Durchführung vorvertraglicher Maßnahmen erforderlich ist (z.B. Erstellung eines Bauspar-Angebots der BHW Bausparkasse AG). In allen übrigen Fällen beruht die Verarbeitung auf Ihrer ausdrücklichen Einwilligung (Art. 6 Abs. 1 lit. a DSGVO), die Sie durch das Setzen des Häkchens im Formular erteilen.</p>
+                        <p class="mt-2"><strong class="text-white">Weitergabe von Daten</strong><br>
+                        Ihre Daten werden von mir als selbstständiger Handelsvertreter (§ 84 HGB) ausschließlich zum Zwecke der Beratung und Angebotserstellung für Produkte der Postbank Finanzberatung AG bzw. der BHW Bausparkasse AG verarbeitet. Eine Weitergabe an unbeteiligte Dritte erfolgt nicht.</p>
+                    </div>
+
+                    <div>
+                        <h3 class="text-neon font-bold uppercase tracking-wide mb-2 text-lg">3. Hosting (Netlify)</h3>
+                        <p>Wir hosten unsere Website bei Netlify (Netlify, Inc., 44 Montgomery Street, Suite 300, San Francisco, California 94104, USA). Netlify ist ein Dienst zum Hosten von Webseiten. Wenn Sie unsere Website besuchen, erfasst Netlify verschiedene Logfiles inklusive Ihrer IP-Adresse. </p>
+                        <p class="mt-2">Zudem nutzen wir die Funktion <strong>"Netlify Forms"</strong> für unser Kontaktformular. Die in das Formular eingegebenen Daten werden verschlüsselt an die Server von Netlify übertragen und uns von dort per E-Mail zugestellt. Die Verwendung von Netlify erfolgt auf Grundlage von Art. 6 Abs. 1 lit. f DSGVO. Wir haben ein berechtigtes Interesse an einer möglichst zuverlässigen Darstellung und sicheren Formularverarbeitung unserer Website. Wir haben einen Vertrag über Auftragsverarbeitung (AVV) mit Netlify geschlossen.</p>
+                    </div>
+
+                    <div>
+                        <h3 class="text-neon font-bold uppercase tracking-wide mb-2 text-lg">4. Ihre Rechte</h3>
+                        <p>Sie haben jederzeit das Recht, unentgeltlich Auskunft über Herkunft, Empfänger und Zweck Ihrer gespeicherten personenbezogenen Daten zu erhalten. Sie haben außerdem ein Recht, die Berichtigung oder Löschung dieser Daten zu verlangen. Wenn Sie eine Einwilligung zur Datenverarbeitung erteilt haben, können Sie diese Einwilligung jederzeit für die Zukunft widerrufen. Hierzu reicht eine formlose Mitteilung per E-Mail an mich.</p>
+                    </div>
+
+                    <div>
+                        <h3 class="text-neon font-bold uppercase tracking-wide mb-2 text-lg">5. SSL- bzw. TLS-Verschlüsselung</h3>
+                        <p>Diese Seite nutzt aus Sicherheitsgründen und zum Schutz der Übertragung vertraulicher Inhalte, wie zum Beispiel der Anfragen, die Sie an uns senden, eine SSL- bzw. TLS-Verschlüsselung. Eine verschlüsselte Verbindung erkennen Sie daran, dass die Adresszeile des Browsers von „http://“ auf „https://“ wechselt und an dem Schloss-Symbol in Ihrer Browserzeile.</p>
+                    </div>
+
+                    <div>
+                        <h3 class="text-neon font-bold uppercase tracking-wide mb-2 text-lg">6. Cookies</h3>
+                        <p>Unsere Internetseiten verwenden so genannte „Cookies“. Cookies sind kleine Textdateien und richten auf Ihrem Endgerät keinen Schaden an. Sie werden entweder vorübergehend für die Dauer einer Sitzung (Session-Cookies) oder dauerhaft (permanente Cookies) auf Ihrem Endgerät gespeichert. Wir nutzen auf dieser Website ausschließlich technisch notwendige Cookies, die erforderlich sind, damit Sie sich durch die Seiten (wie das Dashboard und den Rechner) bewegen können. Es findet kein seitenübergreifendes Tracking (wie z.B. durch Google Analytics) statt.</p>
+                    </div>
+
+                </div>
+                
+                <button onclick="switchView('view-home')" class="text-gray-500 hover:text-white uppercase text-sm font-bold mt-12 w-full text-center tracking-widest transition-colors bg-space/50 py-4 rounded-xl border border-gray-800">? Zurück zur Startseite</button>
+            </div>
+        </div>
+
+        <div id="view-ratgeber" class="view-section flex-col items-center py-10 px-4 md:px-6 z-10 w-full min-h-[85vh]">
+            <div class="max-w-4xl w-full mx-auto mt-10 bg-panel border border-gray-800 rounded-3xl p-6 md:p-12 text-left shadow-[0_0_50px_rgba(0,0,0,0.5)]">
+                
+                <h1 class="text-3xl md:text-6xl font-black uppercase mb-6 text-white leading-tight">
+                    Ratgeber: <span class="text-neon">Bausparen</span> & <span class="text-cyber">Baufinanzierung</span> 2026
+                </h1>
+                
+                <p class="text-gray-400 text-lg mb-10 leading-relaxed italic border-l-4 border-neon pl-6">
+                    Du hast Fragen – wir haben die Antworten. In diesem Ratgeber haben wir die häufigsten Suchanfragen rund um das Thema Bausparen, Zinsen sichern und Hauskauf für dich zusammengefasst und einfach erklärt.
+                </p>
+
+                <div class="bg-space/50 border border-gray-700 rounded-2xl p-6 mb-16">
+                    <h2 class="text-white font-bold uppercase tracking-widest text-sm mb-4">Inhaltsverzeichnis</h2>
+                    <ul class="grid grid-cols-1 md:grid-cols-2 gap-3 text-neon font-bold text-sm">
+                        <li><a href="#ratgeber-was" class="hover:underline">1. Was ist Bausparen eigentlich?</a></li>
+                        <li><a href="#ratgeber-lohn" class="hover:underline">2. Für wen lohnt es sich?</a></li>
+                        <li><a href="#ratgeber-zinsen" class="hover:underline">3. Zinsentwicklung & Prognose</a></li>
+                        <li><a href="#ratgeber-kinder" class="hover:underline">4. Jugendsparen & Kinder</a></li>
+                        <li><a href="#ratgeber-finanzierung" class="hover:underline">5. Hausfinanzierung & Eigenkapital</a></li>
+                        <li><a href="#ratgeber-foerderung" class="hover:underline">6. Staatliche Förderung & Steuern</a></li>
+                        <li><a href="#ratgeber-verwendung" class="hover:underline">7. Verwendung & Flexibilität</a></li>
+                    </ul>
+                </div>
+
+                <div class="space-y-20 text-gray-300 text-sm md:text-base leading-relaxed">
+                    
+                    <section id="ratgeber-was" class="scroll-mt-24">
+                        <h2 class="text-2xl md:text-3xl font-black uppercase text-white mb-6 border-b border-gray-800 pb-2">1. Was ist Bausparen eigentlich?</h2>
+                        
+                        <div class="space-y-8">
+                            <div>
+                                <h3 class="text-neon font-bold text-lg mb-2 italic">Wie funktioniert Bausparen (einfach für Anfänger erklärt)?</h3>
+                                <p>Stell dir Bausparen wie eine Solidargemeinschaft vor. Viele Menschen zahlen in einen Topf ein (Sparphase). Sobald du genug gespart hast (meist 30-40% der Summe), bekommst du dein Geld zurück – plus ein extrem zinsgünstiges Darlehen von der Bank obendrauf (Zuteilung). Du sicherst dir heute den Zins für später.</p>
+                            </div>
+                            <div>
+                                <h3 class="text-neon font-bold text-lg mb-2 italic">Was passiert, wenn die Bausparsumme erreicht ist?</h3>
+                                <p>Wenn dein Vertrag „zuteilungsreif“ ist, hast du die Wahl: Du kannst dir das Guthaben plus das Darlehen auszahlen lassen, um dein Projekt zu starten. Oder du sparst einfach weiter, wenn du das Geld erst später brauchst.</p>
+                            </div>
+                            <div>
+                                <h3 class="text-neon font-bold text-lg mb-2 italic">Was kostet ein Bausparvertrag und wer zahlt die Gebühr?</h3>
+                                <p>Es fällt eine einmalige Abschlussgebühr an. Diese zahlst du als Sparer zu Beginn. Aber keine Sorge: Durch staatliche Zulagen und die massive Zinsersparnis beim späteren Kredit rechnet sich diese Gebühr meist schon nach kürzester Zeit von selbst.</p>
+                            </div>
+                        </div>
+                    </section>
+
+                    <section id="ratgeber-lohn" class="scroll-mt-24">
+                        <h2 class="text-2xl md:text-3xl font-black uppercase text-white mb-6 border-b border-gray-800 pb-2">2. Für wen lohnt sich Bausparen heute wieder?</h2>
+                        
+                        <div class="space-y-8">
+                            <div>
+                                <h3 class="text-cyber font-bold text-lg mb-2 italic">Warum überhaupt Bausparen und nicht einfach nur sparen?</h3>
+                                <p>Beim normalen Sparen bist du dem Markt ausgeliefert. Wenn die Zinsen steigen, wird dein Hauskauf teurer. Bausparen ist eine <strong>Versicherung gegen steigende Zinsen</strong>. Du kaufst dir heute das Recht, später billig Geld zu leihen.</p>
+                            </div>
+                            <div>
+                                <h3 class="text-cyber font-bold text-lg mb-2 italic">Lohnt es sich für Studenten, Azubis oder Geringverdiener?</h3>
+                                <p>Gerade dann! Warum? Weil du hier die maximale staatliche Förderung abgreifst. Mit der Wohnungsbauprämie und der Arbeitnehmersparzulage schenkt dir der Staat Geld, das du auf dem Sparbuch nie bekommen würdest.</p>
+                            </div>
+                            <div>
+                                <h3 class="text-cyber font-bold text-lg mb-2 italic">Warum sagen manche, dass Bausparen Unsinn ist?</h3>
+                                <p>Das war in der Nullzins-Phase so. Da waren die Zinsen überall niedrig. Heute, wo die Bauzinsen wieder bei 3% oder 4% liegen, ist ein Bausparer mit 1% Zins ein echter Goldesel. Wer heute sagt, es lohne sich nicht, hat die aktuelle Zinswende verpasst.</p>
+                            </div>
+                        </div>
+                    </section>
+
+                    <section id="ratgeber-zinsen" class="scroll-mt-24">
+                        <h2 class="text-2xl md:text-3xl font-black uppercase text-white mb-6 border-b border-gray-800 pb-2">3. Zinsentwicklung & Prognose</h2>
+                        <div class="space-y-8">
+                            <div>
+                                <h3 class="text-white font-bold text-lg mb-2 italic">Wann sinken die Bauzinsen wieder?</h3>
+                                <p>Niemand hat eine Glaskugel. Experten erwarten keine Rückkehr zu den 0,x%-Zeiten. Mit einem Bausparvertrag machst du dich von dieser Frage völlig unabhängig. Du „lockst“ dir deinen Zins ein, egal was der Markt macht.</p>
+                            </div>
+                            <div>
+                                <h3 class="text-white font-bold text-lg mb-2 italic">Wie sieht die Prognose für die nächsten Jahre aus?</h3>
+                                <p>Die Inflation und die Politik der EZB bleiben unsicher. Bausparen ist die einzige Möglichkeit, Planungssicherheit in deine Finanzierung zu bringen. Es ist das Fundament für eine stressfreie Zukunft.</p>
+                            </div>
+                        </div>
+                    </section>
+
+                    <section id="ratgeber-kinder" class="scroll-mt-24">
+                        <h2 class="text-2xl md:text-3xl font-black uppercase text-white mb-6 border-b border-gray-800 pb-2">4. Jugendsparen & Bausparen für Kinder</h2>
+                        <div class="space-y-8">
+                            <div>
+                                <h3 class="text-neon font-bold text-lg mb-2 italic">Was ist Jugendsparen genau und ab wann lohnt es sich?</h3>
+                                <p>Jugendsparen bedeutet, schon früh den Grundstein für die erste Wohnung oder das Haus zu legen. Es lohnt sich ab dem ersten Lebensjahr. Je länger die Laufzeit, desto kleiner die Raten und desto größer der Zinshebel durch die staatlichen Boni für junge Leute.</p>
+                            </div>
+                            <div>
+                                <h3 class="text-neon font-bold text-lg mb-2 italic">Welche staatlichen Prämien gibt es für junge Sparer?</h3>
+                                <p>Junge Leute unter 25 Jahren erhalten oft einen einmaligen Bonus von der Bausparkasse und haben leichten Zugang zur Wohnungsbauprämie. Das ist geschenktes Startkapital für das erste eigene Reich.</p>
+                            </div>
+                        </div>
+                    </section>
+
+                    <section id="ratgeber-finanzierung" class="scroll-mt-24">
+                        <h2 class="text-2xl md:text-3xl font-black uppercase text-white mb-6 border-b border-gray-800 pb-2">5. Hausfinanzierung & Eigenkapital</h2>
+                        <div class="space-y-8">
+                            <div>
+                                <h3 class="text-white font-bold text-lg mb-2 italic">Wie viel Haus kann ich mir leisten und wie berechne ich das?</h3>
+                                <p>Als Faustformel gilt: Die monatliche Rate sollte nicht mehr als 35-40% deines Nettoeinkommens betragen. Mit einem Bausparvertrag erhöhst du dein Eigenkapital, was deine spätere Kreditrate massiv senkt.</p>
+                            </div>
+                            <div>
+                                <h3 class="text-white font-bold text-lg mb-2 italic">Hausfinanzierung ohne Eigenkapital: Geht das noch?</h3>
+                                <p>Es ist sehr schwierig und teuer geworden. Banken verlangen heute meist mindestens 10-20% Eigenkapital. Bausparen ist der sicherste Weg, dieses Kapital diszipliniert aufzubauen, während man gleichzeitig die Zinsen für den Rest sichert.</p>
+                            </div>
+                        </div>
+                    </section>
+
+                    <section id="ratgeber-foerderung" class="scroll-mt-24">
+                        <h2 class="text-2xl md:text-3xl font-black uppercase text-white mb-6 border-b border-gray-800 pb-2">6. Staatliche Förderung & Steuern</h2>
+                        <div class="space-y-8">
+                            <div>
+                                <h3 class="text-cyber font-bold text-lg mb-2 italic">Wer bekommt die Wohnungsbauprämie (WoP)?</h3>
+                                <p>Fast jeder mit einem zu versteuernden Einkommen unter 35.000 € (Singles) bzw. 70.000 € (Verheiratete). Der Staat gibt dir 10% auf deine Einzahlungen dazu – jedes Jahr!</p>
+                            </div>
+                            <div>
+                                <h3 class="text-cyber font-bold text-lg mb-2 italic">Wo gebe ich den Bausparvertrag in der Steuererklärung an?</h3>
+                                <p>Zinsen aus dem Bausparguthaben unterliegen der Abgeltungssteuer, können aber durch einen Freistellungsauftrag geschützt werden. Die Förderung selbst (WoP) ist steuerfrei.</p>
+                            </div>
+                        </div>
+                    </section>
+
+                    <section id="ratgeber-verwendung" class="scroll-mt-24">
+                        <h2 class="text-2xl md:text-3xl font-black uppercase text-white mb-6 border-b border-gray-800 pb-2">7. Verwendung & Flexibilität</h2>
+                        <div class="space-y-8">
+                            <div>
+                                <h3 class="text-white font-bold text-lg mb-2 italic">Darf man Bausparen nur für den Hauskauf verwenden?</h3>
+                                <p>Nein! Du kannst das Geld für alles nutzen, was „wohnwirtschaftlich“ ist: Renovierung, eine neue Küche, ein neues Bad, energetische Sanierung oder sogar zum Ablösen eines teuren bestehenden Kredits (Umschuldung).</p>
+                            </div>
+                            <div>
+                                <h3 class="text-white font-bold text-lg mb-2 italic">Kann man die Bausparsumme später erhöhen?</h3>
+                                <p>Ja, in der Regel ist das problemlos möglich, falls dein Projekt größer wird als geplant. Du bleibst über die gesamte Laufzeit flexibel.</p>
+                            </div>
+                        </div>
+                    </section>
+
+                </div>
+
+                <div class="mt-24 bg-gradient-to-br from-panel to-space border-2 border-neon p-8 md:p-12 rounded-3xl text-center shadow-[0_0_30px_rgba(204,255,0,0.2)]">
+                    <h2 class="text-2xl md:text-4xl font-black uppercase text-white mb-6">Genug gelesen? <span class="text-neon italic">Rechne selbst!</span></h2>
+                    <p class="text-gray-400 mb-10 max-w-xl mx-auto">Nutze unseren interaktiven Rechner, um herauszufinden, wie viel Geld du dir mit deiner persönlichen Zins-Strategie sichern kannst.</p>
+                    <button onclick="switchView('view-home', true)" class="bg-neon text-space font-black text-xl px-12 py-5 rounded-lg hover:bg-white transition-all uppercase shadow-[0_0_20px_rgba(204,255,0,0.4)] transform hover:scale-105">
+                        Jetzt Zins sichern ?
+                    </button>
+                </div>
+                
+                <button onclick="switchView('view-home')" class="text-gray-500 hover:text-white uppercase text-sm font-bold mt-16 w-full text-center tracking-widest transition-colors bg-space/50 py-4 rounded-xl border border-gray-800">? Zurück zur Startseite</button>
+            </div>
+        </div>
+
+    </div>
+
+    <footer class="bg-space pt-12 pb-8 px-4 md:px-6 w-full z-10 relative text-center">
+        <div class="max-w-4xl mx-auto">
+            
+            <div id="pangv-block" class="mb-6 text-[10px] md:text-xs text-gray-500 leading-relaxed text-left border-t border-gray-800 pt-6">
+                <p class="mb-2">
+                    <strong class="text-gray-400">* Repräsentatives Beispiel gem. § 17a PAngV:</strong><br>
+                    Diese Webseite stellt keine unabhängige Anlageberatung dar. Darlehensgeber für alle Beispiele: BHW Bausparkasse AG, Lubahnstraße 2, 31789 Hameln.
+                </p>
+                
+                <p id="pangv-10" class="transition-opacity duration-300">
+                    <strong class="text-gray-400">Tarif BHW WohnBausparen (1,00 %):</strong><br>
+                    <em>Nettodarlehensbetrag: 25.106,22 €, gebundener Sollzinssatz: 1,00 % p.a., effektiver Jahreszins ab Zuteilung: 1,41 % p.a., Laufzeit der Tilgung: 66 Monate. 65 monatliche Raten à 400,00 €, Schlussrate: 97,71 €. Zu zahlender Gesamtbetrag (Darlehen inkl. Zinsen): 26.097,71 €. Einmalige Abschlussgebühr: 800,00 €.</em>
+                </p>
+
+                <p id="pangv-125" class="transition-opacity duration-300 hidden">
+                    <strong class="text-gray-400">Tarif BHW WohnBausparen Plus (1,25 %):</strong><br>
+                    <em>Nettodarlehensbetrag: 25.106,22 €, gebundener Sollzinssatz: 1,25 % p.a., effektiver Jahreszins ab Zuteilung: 1,62 % p.a., Laufzeit der Tilgung: 68 Monate. 67 monatliche Raten à 400,00 €, Schlussrate: 115,56 €. Zu zahlender Gesamtbetrag (Darlehen inkl. Zinsen): 26.915,56 €. Einmalige Abschlussgebühr: 500,00 €.</em>
+                </p>
+
+                <p id="pangv-235" class="transition-opacity duration-300 hidden">
+                    <strong class="text-gray-400">Tarif BHW WohnBausparen (2,35 %):</strong><br>
+                    <em>Nettodarlehensbetrag: 25.106,22 €, gebundener Sollzinssatz: 2,35 % p.a., effektiver Jahreszins ab Zuteilung: 2,84 % p.a., Laufzeit der Tilgung: 87 Monate. 86 monatliche Raten à 400,00 €, Schlussrate: 137,78 €. Zu zahlender Gesamtbetrag (Darlehen inkl. Zinsen): 34.537,78 €. Einmalige Abschlussgebühr: 500,00 €.</em>
+                </p>
+            </div>
+
+            <div class="flex flex-wrap justify-center gap-6 md:gap-10 font-bold uppercase text-[10px] md:text-xs tracking-widest mt-8">
+                <a onclick="switchView('view-ratgeber')" class="text-gray-400 hover:text-neon cursor-pointer transition-colors border-b border-neon/30 pb-1">Ratgeber & Wissen</a>
+                <a onclick="switchView('view-impressum')" class="text-gray-500 hover:text-neon cursor-pointer transition-colors">Impressum & Status</a>
+                <a onclick="switchView('view-datenschutz')" class="text-gray-500 hover:text-neon cursor-pointer transition-colors">Datenschutz</a>
+            </div>
+            
+        </div>
+    </footer>
+
+    <div id="cookie-banner" class="fixed bottom-0 left-0 w-full bg-panel border-t border-neon z-[9999] p-4 md:p-6 shadow-[0_-10px_40px_rgba(204,255,0,0.15)] flex flex-col md:flex-row justify-between items-center gap-4 transition-transform duration-500 transform translate-y-full">
+        <div class="text-xs md:text-sm text-gray-300 leading-relaxed max-w-4xl">
+            <strong class="text-white">Wir nutzen Cookies ?</strong><br>
+            Um dir das beste Erlebnis zu bieten, nutzen wir technisch notwendige Cookies. Indem du fortfährst, stimmst du der Nutzung zu. <a onclick="switchView('view-datenschutz')" class="text-neon hover:underline cursor-pointer">Mehr erfahren in der Datenschutzerklärung</a>.
+        </div>
+        <button onclick="acceptCookies()" class="bg-neon text-space font-black px-6 py-3 rounded-lg hover:bg-white transition-all uppercase whitespace-nowrap text-sm w-full md:w-auto">Verstanden</button>
+    </div>
+
+    <script>
+        // --- COOKIE LOGIK ---
+        function acceptCookies() {
+            localStorage.setItem('cookiesAccepted', 'true');
+            document.getElementById('cookie-banner').classList.add('translate-y-full');
+        }
+        
+        // Zeige Banner nach 2 Sekunden, falls noch nicht akzeptiert
+        setTimeout(() => {
+            if(!localStorage.getItem('cookiesAccepted')) {
+                document.getElementById('cookie-banner').classList.remove('translate-y-full');
+            }
+        }, 2000);
+
+        // --- UX: HYBRID INPUT LOGIC ---
+        function openInput(sliderId, spanId) {
+            if(!spanId) spanId = sliderId + 'Val';
+            const wrap = document.getElementById(spanId + 'Wrap');
+            const input = document.getElementById(sliderId + 'Input');
+            const slider = document.getElementById(sliderId);
+            
+            wrap.classList.add('hidden');
+            input.value = slider.value;
+            input.classList.remove('hidden');
+            input.focus();
+            input.select(); 
+        }
+
+        function closeInput(sliderId, updateFnName, spanId) {
+            if(!spanId) spanId = sliderId + 'Val';
+            const wrap = document.getElementById(spanId + 'Wrap');
+            const input = document.getElementById(sliderId + 'Input');
+            const slider = document.getElementById(sliderId);
+            
+            let val = parseInt(input.value);
+            if(!isNaN(val)) {
+                const min = parseInt(slider.min);
+                const max = parseInt(slider.max);
+                if(val < min) val = min;
+                if(val > max) val = max;
+                slider.value = val;
+            }
+            
+            input.classList.add('hidden');
+            wrap.classList.remove('hidden');
+            
+            window[updateFnName]();
+        }
+
+        // --- NAVIGATION & CHECKOUT ---
+        let cartHasStandard = false;
+        let cartHasRiester = false;
+
+        function switchView(viewId, scrollToConfig = false) {
+            document.querySelectorAll('.view-section').forEach(el => el.classList.remove('active-view'));
+            document.getElementById(viewId).classList.add('active-view');
+            
+            document.querySelectorAll('.nav-link').forEach(el => el.classList.remove('active'));
+            let targetNavId = 'nav-' + viewId.replace('view-', '');
+            if(viewId === 'view-home') targetNavId = 'nav-home'; 
+            
+            const activeNav = document.getElementById(targetNavId);
+            if(activeNav) activeNav.classList.add('active');
+
+            // Hide legal disclaimer in footer on checkout
+            const pangv = document.getElementById('pangv-block');
+            if(pangv) pangv.style.display = (viewId === 'view-checkout') ? 'none' : '';
+
+            if (scrollToConfig) {
+                document.getElementById('configurator').scrollIntoView({ behavior: 'smooth' });
+            } else {
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }
+            if(viewId === 'view-comp') calculateSavingsComparison();
+            if(viewId === 'view-riester') calculateRiester();
+        }
+
+        function openCheckout(productType = 'nav') {
+            if (productType === 'standard') cartHasStandard = true;
+            if (productType === 'riester') cartHasRiester = true;
+            if (!cartHasStandard && !cartHasRiester) cartHasStandard = true;
+
+            const volume = document.getElementById('volume').value;
+            const tariffRadios = document.getElementsByName('tariff');
+            let selectedTariff = "1.0";
+            for(let i = 0; i < tariffRadios.length; i++) { if(tariffRadios[i].checked) selectedTariff = tariffRadios[i].value; }
+            
+            document.getElementById('checkoutVolume').innerText = parseInt(volume).toLocaleString('de-DE');
+            document.getElementById('checkoutTariff').innerText = selectedTariff.replace('.', ',');
+            document.getElementById('checkoutRiesterPA').innerText = document.getElementById('riesterTotalZulage').innerText;
+            document.getElementById('checkoutRiester15').innerText = document.getElementById('riester15Years').innerText;
+
+            // VERSTECKTE FORMULAR-FELDER FÜLLEN
+            document.getElementById('formHiddenVolume').value = volume + " EUR";
+            document.getElementById('formHiddenTariff').value = selectedTariff + " %";
+            document.getElementById('formHiddenRiester').value = cartHasRiester ? "Ja (Zulagen berechnet)" : "Nein";
+
+            updateCartDisplay();
+            
+            // CHECKOUT ZURÜCKSETZEN (Startet immer bei Schritt 1)
+            document.getElementById('step1-container').classList.remove('hidden');
+            document.getElementById('step2-container').classList.add('hidden');
+            document.getElementById('step3-container').classList.add('hidden');
+            document.getElementById('step1-error').classList.add('hidden');
+            document.getElementById('checkoutBackButton').classList.remove('hidden');
+
+            switchView('view-checkout');
+        }
+
+        function updateCartDisplay() {
+            const cardStd = document.getElementById('checkoutCardStandard');
+            const cardRie = document.getElementById('checkoutCardRiester');
+            const title = document.getElementById('checkoutProductTitle');
+
+            cartHasStandard ? cardStd.classList.remove('hidden') : cardStd.classList.add('hidden');
+            cartHasRiester  ? cardRie.classList.remove('hidden') : cardRie.classList.add('hidden');
+
+            if (cartHasStandard && cartHasRiester) {
+                title.innerText = "Komplett-Strategie";
+                title.className = "text-white drop-shadow-[0_0_10px_rgba(255,255,255,0.8)]";
+            } else if (cartHasRiester) {
+                title.innerText = "Familien-Förderung";
+                title.className = "text-cyber drop-shadow-[0_0_10px_rgba(138,43,226,0.6)]";
+            } else {
+                title.innerText = "Zins-Strategie";
+                title.className = "text-neon drop-shadow-[0_0_10px_rgba(204,255,0,0.6)]";
+            }
+        }
+
+        function removeFromCart(type) {
+            if (type === 'standard') cartHasStandard = false;
+            if (type === 'riester') cartHasRiester = false;
+            // Always keep at least one item — if cart is empty, restore standard
+            if (!cartHasStandard && !cartHasRiester) cartHasStandard = true;
+            updateCartDisplay();
+            document.getElementById('formHiddenRiester').value = cartHasRiester ? "Ja (Zulagen berechnet)" : "Nein";
+        }
+
+        // --- CHECKOUT-VALIDIERUNG & AJAX SUBMIT (Schritt 1 -> 2) ---
+        function submitStep1AndShowStep2(btnElement) {
+            const form = document.getElementById('antragForm');
+            const v = document.getElementById('formVorname').value.trim();
+            const n = document.getElementById('formNachname').value.trim();
+            const e = document.getElementById('formEmail').value.trim();
+            const t = document.getElementById('formTelefon').value.trim();
+            const d = document.getElementById('formDsgvo').checked;
+            
+            // Pflichtfelder prüfen
+            if(!v || !n || !e || !t || !d) {
+                document.getElementById('step1-error').classList.remove('hidden');
+                return;
+            }
+            
+            document.getElementById('step1-error').classList.add('hidden');
+            
+            // Button Status auf Laden setzen
+            const originalText = btnElement.innerText;
+            btnElement.innerText = "Daten werden übermittelt...";
+            btnElement.disabled = true;
+
+            // Formular an Formspree schicken (AJAX)
+            const formData = new FormData(form);
+            fetch("https://formspree.io/f/xojypqgd", {
+                method: "POST",
+                headers: { "Accept": "application/json" },
+                body: formData
+            })
+            .then(() => {
+                // Bei Erfolg: Zu Schritt 2 wechseln
+                document.getElementById('step1-container').classList.add('hidden');
+                document.getElementById('step2-container').classList.remove('hidden');
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+                
+                // Button wiederherstellen (falls Formular erneut geöffnet wird)
+                btnElement.innerText = originalText;
+                btnElement.disabled = false;
+            })
+            .catch((error) => {
+                alert("Ein Verbindungsfehler ist aufgetreten. Bitte versuche es noch einmal.");
+                btnElement.innerText = originalText;
+                btnElement.disabled = false;
+            });
+        }
+
+        // --- AJAX SUBMIT FÜR SCHRITT 2 (Um Weiterleitung zu verhindern) ---
+        document.getElementById('antragForm').addEventListener('submit', function(e) {
+            e.preventDefault(); // Verhindert das normale Neuladen der Seite
+            
+            const form = e.target;
+            const submitBtn = form.querySelector('button[type="submit"]');
+            const originalText = submitBtn.innerText;
+            
+            submitBtn.innerText = "Wird verarbeitet...";
+            submitBtn.disabled = true;
+
+            const formData = new FormData(form);
+            fetch("https://formspree.io/f/xojypqgd", {
+                method: "POST",
+                headers: { "Accept": "application/json" },
+                body: formData
+            })
+            .then(() => {
+                document.getElementById('step2-container').classList.add('hidden');
+                document.getElementById('checkoutBackButton').classList.add('hidden');
+                document.getElementById('step3-container').classList.remove('hidden');
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+                
+                submitBtn.innerText = originalText;
+                submitBtn.disabled = false;
+            })
+            .catch((error) => {
+                alert("Ein Verbindungsfehler ist aufgetreten.");
+                submitBtn.innerText = originalText;
+                submitBtn.disabled = false;
+            });
+        });
+
+
+        // --- FAQ TOGGLE FUNKTION ---
+        function toggleFaq(btn) {
+            const content = btn.nextElementSibling;
+            const icon = btn.querySelector('.faq-icon');
+            
+            if (content.style.maxHeight) {
+                content.style.maxHeight = null;
+                icon.innerText = '+';
+                icon.classList.remove('rotate-45');
+            } else {
+                document.querySelectorAll('.faq-content').forEach(c => c.style.maxHeight = null);
+                document.querySelectorAll('.faq-icon').forEach(i => {
+                    i.innerText = '+';
+                    i.classList.remove('rotate-45');
+                });
+                
+                content.style.maxHeight = content.scrollHeight + "px";
+                icon.innerText = '+'; 
+                icon.classList.add('rotate-45');
+            }
+        }
+
+        // --- DASHBOARD BAUSPARER ---
+        function getPromilleRate() { return document.getElementById('turbo').checked ? 0.004 : 0.002; }
+
+        function toggleTurbo() {
+            updateFromVolume(); 
+        }
+
+        function toggleVlInput() {
+            const vlChecked = document.getElementById('vl').checked;
+            const container = document.getElementById('vlInputContainer');
+            if(vlChecked) container.classList.remove('hidden');
+            else container.classList.add('hidden');
+        }
+
+        function updateFromRate() {
+            const rate = parseInt(document.getElementById('rate').value);
+            const promilleRate = getPromilleRate();
+            const volumeInput = document.getElementById('volume');
+            let currentVolume = parseInt(volumeInput.value);
+            
+            const tariffRadios = document.getElementsByName('tariff');
+            let selectedTariff = "1.0";
+            for(let i = 0; i < tariffRadios.length; i++) { if(tariffRadios[i].checked) selectedTariff = tariffRadios[i].value; }
+            
+            let currentMin = selectedTariff === "1.25" ? 50000 : 10000;
+            let maxAllowedVolume = Math.floor(rate / promilleRate); 
+            
+            if (currentVolume > maxAllowedVolume) {
+                volumeInput.value = Math.max(currentMin, maxAllowedVolume);
+            }
+            updateAll();
+        }
+
+        function updateFromVolume() {
+            const volume = parseInt(document.getElementById('volume').value);
+            const promilleRate = getPromilleRate();
+            const rateInput = document.getElementById('rate');
+            let currentRate = parseInt(rateInput.value);
+            
+            let requiredRate = Math.ceil((volume * promilleRate) / 10) * 10; 
+            
+            if (currentRate < requiredRate) {
+                rateInput.value = requiredRate;
+                
+                const rateBox = document.getElementById('rateBox');
+                const rateLabel = document.getElementById('rateLabel');
+                
+                rateBox.classList.remove('border-gray-800');
+                rateBox.classList.add('border-neon', 'shadow-[0_0_20px_rgba(204,255,0,0.5)]');
+                rateLabel.innerText = "Einsatz automatisch erhöht!";
+                rateLabel.classList.add('text-neon');
+                
+                rateBox.classList.remove('shake-trigger');
+                void rateBox.offsetWidth; 
+                rateBox.classList.add('shake-trigger');
+                
+                clearTimeout(window.rateBoxTimeout);
+                window.rateBoxTimeout = setTimeout(() => {
+                    rateBox.classList.remove('border-neon', 'shadow-[0_0_20px_rgba(204,255,0,0.5)]');
+                    rateBox.classList.add('border-gray-800');
+                    rateLabel.innerText = "Dein mtl. Einsatz";
+                    rateLabel.classList.remove('text-neon');
+                }, 1500);
+            }
+            updateAll();
+        }
+
+        function updateAll() {
+            const age = parseInt(document.getElementById('age').value);
+            const rate = parseInt(document.getElementById('rate').value);
+            const lumpSum = parseInt(document.getElementById('lumpSum').value);
+            const isMarried = document.getElementById('married').checked;
+            
+            const tariffRadios = document.getElementsByName('tariff');
+            let selectedTariff = "1.0";
+            for(let i = 0; i < tariffRadios.length; i++) { if(tariffRadios[i].checked) selectedTariff = tariffRadios[i].value; }
+
+            document.getElementById('pangv-10').classList.add('hidden');
+            document.getElementById('pangv-125').classList.add('hidden');
+            document.getElementById('pangv-235').classList.add('hidden');
+
+            if (selectedTariff === "1.0") {
+                document.getElementById('pangv-10').classList.remove('hidden');
+            } else if (selectedTariff === "1.25") {
+                document.getElementById('pangv-125').classList.remove('hidden');
+            } else if (selectedTariff === "2.35") {
+                document.getElementById('pangv-235').classList.remove('hidden');
+            }
+
+            const descDisplay = document.getElementById('tariffDescDisplay');
+            if (selectedTariff === "1.0") {
+                descDisplay.innerHTML = "(Fokus auf maximale Zins-Ersparnis)";
+                descDisplay.className = "block text-xs md:text-sm text-gray-500 font-medium mt-1 normal-case tracking-normal transition-colors";
+            } else if (selectedTariff === "1.25") {
+                descDisplay.innerHTML = "(Der Premium-Allrounder ab 50.000 €)";
+                descDisplay.className = "block text-xs md:text-sm text-gray-500 font-medium mt-1 normal-case tracking-normal transition-colors";
+            } else if (selectedTariff === "2.35") {
+                descDisplay.innerHTML = "(Fokus auf schnellste Verfügbarkeit ?)";
+                descDisplay.className = "block text-xs md:text-sm text-neon font-medium mt-1 normal-case tracking-normal transition-colors drop-shadow-[0_0_5px_rgba(204,255,0,0.4)]";
+            }
+
+            const volumeInput = document.getElementById('volume');
+            if (selectedTariff === "1.25") {
+                volumeInput.min = 50000;
+                if (parseInt(volumeInput.value) < 50000) {
+                    volumeInput.value = 50000;
+                    updateFromVolume(); 
+                    return; 
+                }
+            } else {
+                volumeInput.min = 10000;
+            }
+            let volume = parseInt(volumeInput.value);
+
+            const vl = document.getElementById('vl').checked;
+            const vlAmount = vl ? parseInt(document.getElementById('vlAmount').value) : 0;
+            if(vl) document.getElementById('vlAmountVal').innerText = vlAmount;
+
+            document.getElementById('ageVal').innerText = age;
+            document.getElementById('rateVal').innerText = rate;
+            document.getElementById('volumeVal').innerText = volume.toLocaleString('de-DE');
+            document.getElementById('resultVolume').innerText = volume.toLocaleString('de-DE');
+            document.getElementById('lumpSumVal').innerText = lumpSum.toLocaleString('de-DE');
+            document.getElementById('resultTariff').innerText = selectedTariff.replace('.', ',');
+
+            const ageBadge = document.getElementById('ageBadge');
+            if (age < 26) ageBadge.classList.remove('opacity-0'); else ageBadge.classList.add('opacity-0');
+
+            const timeSkipResult = document.getElementById('timeSkipResult');
+            if (lumpSum > 0) {
+                timeSkipResult.classList.remove('hidden');
+                let skippedMonthsTotal = Math.floor(lumpSum / rate);
+                let years = Math.floor(skippedMonthsTotal / 12);
+                let months = skippedMonthsTotal % 12;
+                let timeString = "";
+                if (years > 0) timeString += years + (years === 1 ? " Jahr" : " Jahre");
+                if (months > 0) {
+                    if (years > 0) timeString += " und "; timeString += months + (months === 1 ? " Monat" : " Monate");
+                }
+                if (years === 0 && months === 0) timeString = "fast einen Monat";
+                document.getElementById('timeSkipVal').innerText = timeString;
+            } else {
+                timeSkipResult.classList.add('hidden');
+            }
+
+            const maxWop = isMarried ? 140 : 70;
+            let yearlySave = rate * 12; 
+            let wop = yearlySave * 0.10;
+            if (wop > maxWop) wop = maxWop;
+            document.getElementById('wopVal').innerText = wop.toFixed(0);
+
+            let vlZulage = 0;
+            if (vl) {
+                let yearlyVl = vlAmount * 12;
+                let maxVlBase = isMarried ? 940 : 470;
+                let vlBase = Math.min(yearlyVl, maxVlBase);
+                vlZulage = vlBase * 0.09; 
+            }
+
+            let abschlussGebuehrRate = 0.016;
+            if (selectedTariff === "1.0") {
+                abschlussGebuehrRate = 0.016;
+            } else if (selectedTariff === "1.25") {
+                abschlussGebuehrRate = 0.01;
+            } else if (selectedTariff === "2.35") {
+                abschlussGebuehrRate = volume >= 50000 ? 0.01 : 0.016;
+            }
+            let abschlussGebuehr = volume * abschlussGebuehrRate; 
+            
+            document.getElementById('akDisplayVal').innerText = abschlussGebuehr.toLocaleString('de-DE');
+
+            let restGebuehr = abschlussGebuehr;
+            let currentGuthaben = 0;
+
+            if (lumpSum >= restGebuehr) { currentGuthaben = lumpSum - restGebuehr; restGebuehr = 0; } 
+            else { restGebuehr -= lumpSum; currentGuthaben = 0; }
+
+            let bzFaktor = (selectedTariff === "1.0") ? 13 : (selectedTariff === "2.35" ? 35 : 20);
+            let targetBZ = 32;
+            let saldensumme = 0; let zuteilungsJahre = 0; let zielErreicht = false;
+
+            let saveRate = rate + vlAmount;
+
+            for (let m = 1; m <= 360; m++) {
+                if (restGebuehr > 0) {
+                    if (saveRate >= restGebuehr) { currentGuthaben += (saveRate - restGebuehr); restGebuehr = 0; } 
+                    else { restGebuehr -= saveRate; }
+                } else { currentGuthaben += saveRate; }
+
+                if (m % 3 === 0 && currentGuthaben > 0) saldensumme += currentGuthaben;
+
+                let bd = volume - currentGuthaben;
+                if (bd < volume * 0.25) bd = volume * 0.25;
+                
+                let angenommeneTilgung = volume * 0.006; 
+                let tilgungszeit = bd / (angenommeneTilgung * 12);
+                if (tilgungszeit <= 0) tilgungszeit = 0.0001;
+
+                let bz = (saldensumme / (bd * tilgungszeit)) * bzFaktor;
+
+                if (bz >= targetBZ && currentGuthaben >= (volume * 0.20) && restGebuehr === 0) {
+                    zuteilungsJahre = parseFloat((m / 12).toFixed(1)); zielErreicht = true; break;
+                }
+            }
+
+            let zuteilungContainer = document.getElementById('zuteilungContainer');
+            if (zielErreicht) {
+                if (zuteilungsJahre <= 0.1) { zuteilungContainer.innerHTML = '<span class="text-neon font-black drop-shadow-[0_0_5px_rgba(204,255,0,0.8)]">sofort (Guthaben reicht) ?</span>'; } 
+                else { zuteilungContainer.innerHTML = 'ca. <span class="font-black">' + zuteilungsJahre + '</span> Jahren'; }
+            } else {
+                zuteilungContainer.innerHTML = '<span class="text-red-500 font-bold text-sm">Rate zu niedrig</span>';
+            }
+
+            if (vl) {
+                document.getElementById('vlResultAmount').innerText = vlAmount;
+                document.getElementById('vlResult').classList.remove('hidden');
+                document.getElementById('vlResult').classList.add('flex');
+            } else {
+                document.getElementById('vlResult').classList.add('hidden');
+                document.getElementById('vlResult').classList.remove('flex');
+            }
+
+            const totalFoerderungElement = document.getElementById('totalSubsidiesResult');
+            let foerderungProJahr = wop + vlZulage + (vl ? (vlAmount * 12) : 0);
+            let gesamtFoerderung = 0;
+            
+            if (zielErreicht && zuteilungsJahre > 0) {
+                gesamtFoerderung = foerderungProJahr * zuteilungsJahre;
+                
+                document.getElementById('totalFoerderungVal').innerText = gesamtFoerderung.toLocaleString('de-DE', {maximumFractionDigits: 0});
+                totalFoerderungElement.classList.remove('hidden');
+                totalFoerderungElement.classList.add('flex');
+            } else {
+                totalFoerderungElement.classList.add('hidden');
+                totalFoerderungElement.classList.remove('flex');
+            }
+            
+            let standardAmortisationEl = document.getElementById('standardAmortisation');
+            if (gesamtFoerderung > 0 && zielErreicht) {
+                let payoffText = "";
+                if (gesamtFoerderung >= abschlussGebuehr) {
+                    payoffText = "Genial: Deine Abschlusskosten werden vollständig durch die Förderung refinanziert!";
+                } else {
+                    let deckung = (gesamtFoerderung / abschlussGebuehr) * 100;
+                    payoffText = "Clever: Die staatliche Förderung übernimmt " + deckung.toFixed(0) + " % deiner Abschlusskosten!";
+                }
+                
+                standardAmortisationEl.innerText = payoffText;
+                standardAmortisationEl.style.display = 'block';
+            } else {
+                standardAmortisationEl.style.display = 'none';
+            }
+            
+            if (cartHasStandard || cartHasRiester) {
+                document.getElementById('checkoutVolume').innerText = parseInt(volume).toLocaleString('de-DE');
+                document.getElementById('checkoutTariff').innerText = selectedTariff.replace('.', ',');
+            }
+        }
+
+        function calcBudget() {
+            const income = parseInt(document.getElementById('budgetIn').value);
+            const expenses = parseInt(document.getElementById('budgetOut').value);
+            
+            document.getElementById('budgetInVal').innerText = income.toLocaleString('de-DE');
+            document.getElementById('budgetOutVal').innerText = expenses.toLocaleString('de-DE');
+            
+            let free = income - expenses;
+            if (free < 0) free = 0;
+            document.getElementById('budgetFree').innerText = free.toLocaleString('de-DE');
+            
+            let recRate = Math.floor((free * 0.5) / 10) * 10;
+            if (recRate < 50 && free >= 50) recRate = 50; 
+            if (recRate > 2000) recRate = 2000;
+            if (free < 50) recRate = 0;
+
+            let recVol = Math.floor(recRate / 0.004); 
+            if (recVol > 500000) recVol = 500000;
+            recVol = Math.ceil(recVol / 1000) * 1000;
+            
+            document.getElementById('budgetRecRate').innerText = recRate.toLocaleString('de-DE');
+            document.getElementById('budgetRecVol').innerText = recVol.toLocaleString('de-DE');
+        }
+
+        function applyBudgetAndCheckout() {
+            const recVolText = document.getElementById('budgetRecVol').innerText.replace(/\./g, '');
+            const recVol = parseInt(recVolText);
+            const volumeInput = document.getElementById('volume');
+            
+            if(recVol >= 10000 && recVol <= 500000) {
+                volumeInput.value = recVol;
+                const tariffRadios = document.getElementsByName('tariff');
+                for(let i = 0; i < tariffRadios.length; i++) {
+                    if(tariffRadios[i].value === "2.35") {
+                        tariffRadios[i].checked = true;
+                    }
+                }
+                updateAll(); 
+            }
+            openCheckout('standard');
+        }
+
+        function calculateAnnuityInterest(p, annualRate, years) {
+            const r = annualRate / 100 / 12; const n = years * 12; if (r === 0) return 0;
+            const m = p * (r * Math.pow(1 + r, n)) / (Math.pow(1 + r, n) - 1);
+            return Math.floor((m * n) - p);
+        }
+
+        function calculateSavingsComparison() {
+            const priceLoan = parseInt(document.getElementById('priceSlider').value);
+            const compRateRadios = document.getElementsByName('compRate');
+            let selectedCompRate = 5.0;
+            for(let i = 0; i < compRateRadios.length; i++) { if(compRateRadios[i].checked) selectedCompRate = parseFloat(compRateRadios[i].value); }
+
+            const baselineInterest = calculateAnnuityInterest(priceLoan, 5.0, 30);
+            const selectedInterest = calculateAnnuityInterest(priceLoan, selectedCompRate, 30);
+            const savedAmount = baselineInterest - selectedInterest;
+
+            document.getElementById('compPriceVal').innerText = priceLoan.toLocaleString('de-DE');
+            document.getElementById('interestCostVal').innerText = selectedInterest.toLocaleString('de-DE') + ' €';
+            
+            document.querySelectorAll('.price-val').forEach(el => el.innerText = priceLoan.toLocaleString('de-DE') + ' €');
+            document.querySelectorAll('.total-pay-val').forEach(el => el.innerText = (priceLoan + selectedInterest).toLocaleString('de-DE') + ' €');
+            
+            if(document.getElementById('savedAmountVal')) {
+                document.getElementById('savedAmountVal').innerText = savedAmount.toLocaleString('de-DE') + ' €';
+            }
+
+            const interestBar = document.getElementById('interestBar'); const interestTitle = document.getElementById('interestTitle');
+            const painBox = document.getElementById('compPainBox'); const saveBox = document.getElementById('compSaveBox');
+            const interestCostText = document.getElementById('interestCostText');
+
+            let ratio = (selectedInterest / priceLoan) * 100; if (ratio > 100) ratio = 100; 
+            interestBar.style.width = ratio + '%';
+
+            if (selectedCompRate === 5.0) {
+                interestBar.classList.remove('bg-neon', 'border-neon'); interestBar.classList.add('bg-red-600', 'border-red-600');
+                interestTitle.classList.add('vibrate-heavy', 'text-red-500'); interestTitle.classList.remove('text-neon');
+                painBox.classList.remove('hidden'); if(saveBox) saveBox.classList.add('hidden');
+                
+                if(interestCostText) { interestCostText.classList.remove('text-space'); interestCostText.classList.add('text-white'); }
+            } else {
+                interestBar.classList.remove('bg-red-600', 'border-red-600'); interestBar.classList.add('bg-neon', 'border-neon');
+                interestTitle.classList.remove('vibrate-heavy', 'text-red-500'); interestTitle.classList.add('text-neon');
+                painBox.classList.add('hidden'); if(saveBox) saveBox.classList.remove('hidden');
+                
+                if(interestCostText) { interestCostText.classList.remove('text-white'); interestCostText.classList.add('text-space'); }
+            }
+        }
+
+        function togglePartnerSettings() {
+            const isMarried = document.getElementById('riesterMarried').checked;
+            const partnerSettings = document.getElementById('partnerSettings');
+            if(isMarried) { partnerSettings.classList.remove('hidden'); } 
+            else { partnerSettings.classList.add('hidden'); document.getElementById('riesterPartnerOptOut').checked = false; }
+        }
+
+        function calculateRiester() {
+            const income = parseInt(document.getElementById('riesterIncome').value);
+            const partnerIncome = parseInt(document.getElementById('riesterPartnerIncome').value);
+            const kidsPost = parseInt(document.getElementById('riesterKidsPost').value);
+            const kidsPre = parseInt(document.getElementById('riesterKidsPre').value);
+            const isMarried = document.getElementById('riesterMarried').checked;
+            const partnerOptOut = document.getElementById('riesterPartnerOptOut').checked;
+
+            document.getElementById('riesterIncomeVal').innerText = income.toLocaleString('de-DE');
+            document.getElementById('riesterPartnerIncomeVal').innerText = partnerIncome.toLocaleString('de-DE');
+            document.getElementById('kidsPostVal').innerText = kidsPost;
+            document.getElementById('kidsPreVal').innerText = kidsPre;
+
+            let baseZulage = 175; let targetSaving = income * 0.04; let minOwn = 60;
+            if (targetSaving >= 2100) targetSaving = 2100;
+            
+            if (isMarried && !partnerOptOut) {
+                baseZulage += 175; let partnerSaving = partnerIncome * 0.04;
+                if (partnerSaving >= 2100) partnerSaving = 2100;
+                targetSaving += partnerSaving; minOwn = 120; 
+            }
+
+            const totalZulage = baseZulage + (kidsPost * 300) + (kidsPre * 185);
+            let requiredOwn = targetSaving - totalZulage;
+            if (requiredOwn < minOwn) requiredOwn = minOwn;
+
+            let monthlyOwn = Math.ceil((requiredOwn / 12) / 5) * 5;
+            let actualOwnYearly = monthlyOwn * 12;
+
+            document.getElementById('riesterTotalZulage').innerText = totalZulage.toLocaleString('de-DE');
+            document.getElementById('riesterMonthly').innerText = monthlyOwn.toFixed(2).replace('.', ',');
+            document.getElementById('riester15Years').innerText = (totalZulage * 15).toLocaleString('de-DE');
+
+            const minBadge = document.getElementById('riesterMinBadge');
+            if (actualOwnYearly <= minOwn) {
+                minBadge.innerHTML = '? Genial: Du zahlst nur den gesetzlichen Mindestbeitrag!';
+                minBadge.classList.remove('bg-neon', 'border-neon');
+                minBadge.classList.add('bg-space', 'border-gray-700', 'border');
+                minBadge.classList.remove('border-2', 'shadow-[0_0_15px_rgba(204,255,0,0.3)]');
+            } else {
+                let percent = (totalZulage / actualOwnYearly) * 100;
+                minBadge.innerHTML = `? Wahnsinn: + ${percent.toFixed(0)} % Förderung auf deine Einzahlung!`;
+                minBadge.classList.remove('bg-space', 'border-gray-700', 'border');
+                minBadge.classList.add('bg-space', 'border-neon', 'border-2', 'shadow-[0_0_15px_rgba(204,255,0,0.3)]');
+            }
+
+            const tariffRadios = document.getElementsByName('tariff');
+            let selectedTariff = "1.0";
+            for(let i = 0; i < tariffRadios.length; i++) { if(tariffRadios[i].checked) selectedTariff = tariffRadios[i].value; }
+
+            let totalMonthlySavings = (actualOwnYearly + totalZulage) / 12;
+            let promilleRate = (selectedTariff === "2.35") ? 0.004 : 0.003; 
+            let optimalVolume = totalMonthlySavings / promilleRate;
+            optimalVolume = Math.ceil(optimalVolume / 1000) * 1000;
+            
+            if (optimalVolume > 90000) optimalVolume = 90000;
+            if (optimalVolume < 10000) optimalVolume = 10000;
+
+            let abschlussGebuehrRate = 0.016; 
+            if (selectedTariff === "1.0") {
+                abschlussGebuehrRate = 0.016;
+            } else if (selectedTariff === "1.25") {
+                abschlussGebuehrRate = 0.01; 
+            } else if (selectedTariff === "2.35") {
+                abschlussGebuehrRate = optimalVolume >= 50000 ? 0.01 : 0.016;
+            }
+            
+            let abschlussGebuehr = optimalVolume * abschlussGebuehrRate; 
+            
+            document.getElementById('riesterAbschlusskosten').innerText = abschlussGebuehr.toLocaleString('de-DE') + ' €';
+
+            let payoffYearsRaw = abschlussGebuehr / totalZulage;
+            let payoffMonthsTotal = Math.ceil(payoffYearsRaw * 12);
+            let payoffYears = Math.floor(payoffMonthsTotal / 12);
+            let payoffMonths = payoffMonthsTotal % 12;
+
+            let payoffText = "Die staatlichen Zulagen haben diese Kosten bereits nach ";
+            if (payoffYears === 0) {
+                payoffText += `${payoffMonths} Monaten `;
+            } else if (payoffYears === 1) {
+                payoffText += `1 Jahr ` + (payoffMonths > 0 ? `und ${payoffMonths} Monaten ` : ``);
+            } else {
+                payoffText += `${payoffYears} Jahren ` + (payoffMonths > 0 ? `und ${payoffMonths} Monaten ` : ``);
+            }
+            payoffText += "komplett getilgt!";
+            
+            document.getElementById('riesterAmortisation').innerText = payoffText;
+        }
+
+        // Init
+        updateFromVolume(); 
+        calculateRiester();
+        calcBudget();
+    </script>
+</body>
+</html>
