@@ -249,14 +249,35 @@
                             <ul class="space-y-4 mt-4 md:mt-2">
                                 <li class="flex justify-between items-center text-sm md:text-xl border-b border-gray-800 pb-3"><span class="text-gray-300">Gesichertes Volumen:</span><span class="font-black text-xl md:text-2xl text-white"><span id="resultVolume">50.000</span> €</span></li>
                                 <li class="flex justify-between items-center text-sm md:text-xl"><span class="text-gray-300">Garantierter Darlehenszins:</span><span class="font-black text-xl md:text-2xl text-white"><span id="resultTariff">1,0</span> %<sup class="text-xs md:text-sm font-bold">*</sup></span></li>
-                                <li class="flex flex-col md:flex-row justify-between md:items-center text-sm md:text-xl bg-gray-900 p-3 rounded-lg border border-gray-700 gap-1"><span class="text-gray-300 font-bold">Verfügbar in:</span><span id="zuteilungContainer" class="font-black text-lg md:text-xl text-white"></span></li>
+                                <li class="flex flex-col md:flex-row justify-between md:items-center text-sm md:text-xl bg-gray-900 p-3 rounded-lg border border-gray-700 gap-1"><span class="text-gray-300 font-bold flex items-center gap-2">Verfügbar in:
+                                        <div class="relative flex items-center group cursor-help">
+                                            <span class="text-space bg-neon rounded-full w-5 h-5 flex items-center justify-center text-xs font-bold hover:scale-110 transition-transform">?</span>
+                                            <div class="absolute bottom-full left-0 md:left-1/2 md:-translate-x-1/2 mb-2 hidden group-hover:block w-64 p-3 bg-space border border-neon text-gray-300 text-xs rounded shadow-[0_0_15px_rgba(204,255,0,0.4)] z-50 font-normal">
+                                                <strong class="text-neon block mb-2 border-b border-gray-700 pb-1">Wann genau?</strong>
+                                                <p class="mb-1">Die angezeigte Zeit ist eine Schätzung basierend auf deiner Sparrate. Der genaue Zuteilungszeitpunkt wird individuell im persönlichen Telefongespräch mit dir besprochen und festgelegt.</p>
+                                                <span class="text-[10px] text-gray-400 leading-tight block">Einmalzahlungen können die Verfügbarkeit erheblich beschleunigen.</span>
+                                            </div>
+                                        </div>
+                                    </span><span id="zuteilungContainer" class="font-black text-lg md:text-xl text-white"></span></li>
                                 <li id="timeSkipResult" class="flex flex-col md:flex-row justify-between md:items-center text-sm md:text-xl bg-cyber/20 p-3 rounded-lg border border-cyber hidden gap-1"><span class="text-cyber font-bold text-xs md:text-lg uppercase">Zeitersparnis:</span><span class="font-black text-lg md:text-xl text-cyber">überspringt <span id="timeSkipVal"></span> ?</span></li>
                                 
                                 <li class="flex justify-between items-center text-sm md:text-xl pt-2"><span class="text-gray-300">Wohnungsbauprämie (p.a.):</span><span class="font-black text-xl md:text-2xl text-white">+ <span id="wopVal">60</span> €</span></li>
                                 <li id="vlResult" class="flex justify-between items-center text-sm md:text-xl hidden"><span class="text-gray-300">Arbeitgeber-Zuschuss (VL mtl.):</span><span class="font-black text-lg md:text-xl text-white">+ <span id="vlResultAmount">40</span> €</span></li>
                                 
                                 <li id="totalSubsidiesResult" class="flex flex-col md:flex-row justify-between items-center text-sm md:text-xl border-t border-gray-700 pt-4 mt-2 hidden">
-                                    <span class="text-neon font-bold uppercase text-xs md:text-sm">Gesamtförderung (Laufzeit):</span>
+                                    <span class="text-neon font-bold uppercase text-xs md:text-sm flex items-center gap-2">Gesamtförderung (Laufzeit):
+                                        <div class="relative flex items-center group cursor-help">
+                                            <span class="text-space bg-neon rounded-full w-5 h-5 flex items-center justify-center text-xs font-bold hover:scale-110 transition-transform">?</span>
+                                            <div class="absolute bottom-full left-0 md:left-1/2 md:-translate-x-1/2 mb-2 hidden group-hover:block w-64 p-3 bg-space border border-neon text-gray-300 text-xs rounded shadow-[0_0_15px_rgba(204,255,0,0.4)] z-50 font-normal">
+                                                <strong class="text-neon block mb-2 border-b border-gray-700 pb-1">Woher kommt die Förderung?</strong>
+                                                <ul class="space-y-1 mb-2">
+                                                    <li>• <strong class="text-white">Wohnungsbauprämie:</strong> Bis zu 70 € p.a. (Single) bzw. 140 € p.a. (Verheiratete) — einkommensabhängig (max. 35.000 € / 70.000 € zvE)</li>
+                                                    <li>• <strong class="text-white">Arbeitnehmersparzulage (VL):</strong> 9 % auf vermögenswirksame Leistungen deines Arbeitgebers</li>
+                                                </ul>
+                                                <span class="text-[10px] text-gray-400 leading-tight block">Die genauen Förderbeträge hängen von deinem Einkommen und Familienstand ab. Im persönlichen Gespräch ermitteln wir deine individuelle Förderung.</span>
+                                            </div>
+                                        </div>
+                                    </span>
                                     <span class="font-black text-2xl md:text-3xl text-neon">+ <span id="totalFoerderungVal">0</span> €</span>
                                 </li>
                                 
@@ -408,7 +429,7 @@
                             </button>
                             <div class="faq-content bg-space border-t border-gray-800">
                                 <p class="px-6 py-5 text-gray-400 text-sm md:text-base leading-relaxed">
-                                    Das Prinzip besteht aus zwei Phasen: Zuerst baust du in der Ansparphase mit deiner monatlichen Rate Eigenkapital auf (in der Regel 20 bis 25 % der Gesamtsumme). Sobald dieses Ziel erreicht ist, wird der Vertrag zugeteilt. Dann stellt dir die Bank das angesparte Guthaben plus das restliche Geld als extrem zinsgünstiges Darlehen für deine Immobilienpläne zur Verfügung.
+                                    Das Prinzip besteht aus zwei Phasen: Zuerst baust du in der Ansparphase mit deiner monatlichen Rate Eigenkapital auf. Sobald dieses Ziel erreicht ist, wird der Vertrag zugeteilt. Dann stellt dir die Bank das angesparte Guthaben plus das restliche Geld als extrem zinsgünstiges Darlehen für deine Immobilienpläne zur Verfügung.
                                 </p>
                             </div>
                         </div>
